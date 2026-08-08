@@ -35,6 +35,8 @@
 
     <main>
 
+        <!-- HERO -->
+
         <section class="hero">
 
             <div class="hero-content">
@@ -57,33 +59,369 @@
         </section>
 
 
+        <!-- GAMES -->
+
         <section class="section" id="games">
 
-            <h2 class="section-title">
-                Games
-            </h2>
+            <div class="section-heading">
 
-            <p class="section-description">
-                Your next game will live here.
-            </p>
+                <div>
+                    <h2 class="section-title">
+                        Discover Games
+                    </h2>
+
+                    <p class="section-description">
+                        Explore games created inside the Jharnax realm.
+                    </p>
+                </div>
+
+                <div class="game-search">
+                    <input
+                        type="search"
+                        id="gameSearch"
+                        placeholder="Search games..."
+                        aria-label="Search games"
+                    >
+                </div>
+
+            </div>
+
+
+            <!-- CATEGORY FILTERS -->
+
+            <div class="category-filters" id="categoryFilters">
+
+                <button
+                    class="filter-button active"
+                    data-category="all"
+                    type="button"
+                >
+                    All
+                </button>
+
+                <button
+                    class="filter-button"
+                    data-category="puzzle"
+                    type="button"
+                >
+                    Puzzle
+                </button>
+
+                <button
+                    class="filter-button"
+                    data-category="arcade"
+                    type="button"
+                >
+                    Arcade
+                </button>
+
+                <button
+                    class="filter-button"
+                    data-category="brain"
+                    type="button"
+                >
+                    Brain
+                </button>
+
+                <button
+                    class="filter-button"
+                    data-category="strategy"
+                    type="button"
+                >
+                    Strategy
+                </button>
+
+                <button
+                    class="filter-button"
+                    data-category="casual"
+                    type="button"
+                >
+                    Casual
+                </button>
+
+            </div>
+
+
+            <!-- GAME GRID -->
+
+            <div class="game-grid" id="gameGrid">
+
+
+                <article
+                    class="game-card"
+                    data-category="puzzle"
+                    data-name="Puzzle Game"
+                >
+
+                    <div class="game-card-visual">
+                        <span>01</span>
+                    </div>
+
+                    <div class="game-card-content">
+
+                        <div class="game-category">
+                            PUZZLE
+                        </div>
+
+                        <h3>
+                            Coming Soon
+                        </h3>
+
+                        <p>
+                            An original Jharnax puzzle experience.
+                        </p>
+
+                        <button
+                            class="game-button"
+                            type="button"
+                            disabled
+                        >
+                            Coming Soon
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="game-card"
+                    data-category="arcade"
+                    data-name="Arcade Game"
+                >
+
+                    <div class="game-card-visual">
+                        <span>02</span>
+                    </div>
+
+                    <div class="game-card-content">
+
+                        <div class="game-category">
+                            ARCADE
+                        </div>
+
+                        <h3>
+                            Coming Soon
+                        </h3>
+
+                        <p>
+                            A fast-paced challenge from Jharnax.
+                        </p>
+
+                        <button
+                            class="game-button"
+                            type="button"
+                            disabled
+                        >
+                            Coming Soon
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="game-card"
+                    data-category="brain"
+                    data-name="Brain Game"
+                >
+
+                    <div class="game-card-visual">
+                        <span>03</span>
+                    </div>
+
+                    <div class="game-card-content">
+
+                        <div class="game-category">
+                            BRAIN
+                        </div>
+
+                        <h3>
+                            Coming Soon
+                        </h3>
+
+                        <p>
+                            Something clever is being created.
+                        </p>
+
+                        <button
+                            class="game-button"
+                            type="button"
+                            disabled
+                        >
+                            Coming Soon
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="game-card"
+                    data-category="strategy"
+                    data-name="Strategy Game"
+                >
+
+                    <div class="game-card-visual">
+                        <span>04</span>
+                    </div>
+
+                    <div class="game-card-content">
+
+                        <div class="game-category">
+                            STRATEGY
+                        </div>
+
+                        <h3>
+                            Coming Soon
+                        </h3>
+
+                        <p>
+                            Plan, adapt, and outthink the challenge.
+                        </p>
+
+                        <button
+                            class="game-button"
+                            type="button"
+                            disabled
+                        >
+                            Coming Soon
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="game-card"
+                    data-category="casual"
+                    data-name="Casual Game"
+                >
+
+                    <div class="game-card-visual">
+                        <span>05</span>
+                    </div>
+
+                    <div class="game-card-content">
+
+                        <div class="game-category">
+                            CASUAL
+                        </div>
+
+                        <h3>
+                            Coming Soon
+                        </h3>
+
+                        <p>
+                            Easy to pick up. Made for a quick escape.
+                        </p>
+
+                        <button
+                            class="game-button"
+                            type="button"
+                            disabled
+                        >
+                            Coming Soon
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="game-card"
+                    data-category="puzzle"
+                    data-name="Memory Game"
+                >
+
+                    <div class="game-card-visual">
+                        <span>06</span>
+                    </div>
+
+                    <div class="game-card-content">
+
+                        <div class="game-category">
+                            PUZZLE
+                        </div>
+
+                        <h3>
+                            Coming Soon
+                        </h3>
+
+                        <p>
+                            Test your memory in a future Jharnax game.
+                        </p>
+
+                        <button
+                            class="game-button"
+                            type="button"
+                            disabled
+                        >
+                            Coming Soon
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <div
+                class="no-results"
+                id="noResults"
+                hidden
+            >
+                No games found.
+            </div>
 
         </section>
 
 
-        <section class="section" id="categories">
+        <!-- CATEGORIES -->
+
+        <section class="section categories-section" id="categories">
 
             <h2 class="section-title">
-                Explore
+                Explore Jharnax
             </h2>
 
             <p class="section-description">
                 Puzzle, arcade, brain, strategy, reaction, casual,
-                and more.
+                memory, word games, and more will gradually become
+                part of the realm.
             </p>
 
         </section>
 
     </main>
+
+
+    <footer class="site-footer">
+
+        <div class="footer-inner">
+
+            <div>
+                <div class="brand">
+                    JHARN<span>AX</span>
+                </div>
+
+                <p>
+                    A gaming realm of Addyverse.
+                </p>
+            </div>
+
+            <div class="footer-copy">
+                © 2026 Jharnax
+            </div>
+
+        </div>
+
+    </footer>
 
 
     <script src="script.js"></script>
