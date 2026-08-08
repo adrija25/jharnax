@@ -20,11 +20,25 @@ html {
 body {
     margin: 0;
     min-height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     background:
-        radial-gradient(circle at 20% 10%, rgba(139, 92, 246, 0.15), transparent 30%),
-        radial-gradient(circle at 80% 30%, rgba(91, 33, 182, 0.12), transparent 30%),
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(139, 92, 246, 0.15),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 30%,
+            rgba(91, 33, 182, 0.12),
+            transparent 30%
+        ),
         var(--jharnax-bg);
+
     color: var(--jharnax-text);
 }
 
@@ -50,8 +64,9 @@ p {
     color: white;
 }
 
+
 /* =========================
-   JHARNAX BRAND
+   BRAND
 ========================= */
 
 .brand {
@@ -65,6 +80,7 @@ p {
     color: var(--jharnax-accent-light);
 }
 
+
 /* =========================
    HEADER
 ========================= */
@@ -73,18 +89,24 @@ p {
     position: sticky;
     top: 0;
     z-index: 100;
+
     border-bottom: 1px solid var(--jharnax-border);
+
     background: rgba(8, 8, 18, 0.85);
+
     backdrop-filter: blur(16px);
 }
 
 .navbar {
     width: min(1200px, calc(100% - 40px));
     min-height: 72px;
+
     margin: 0 auto;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 30px;
 }
 
@@ -97,6 +119,7 @@ p {
 .nav-links a {
     color: var(--jharnax-muted);
     font-size: 0.95rem;
+
     transition: color 0.2s ease;
 }
 
@@ -104,16 +127,20 @@ p {
     color: var(--jharnax-text);
 }
 
+
 /* =========================
    HERO
 ========================= */
 
 .hero {
     width: min(1200px, calc(100% - 40px));
-    margin: 0 auto;
     min-height: 560px;
+
+    margin: 0 auto;
+
     display: flex;
     align-items: center;
+
     padding: 90px 0;
 }
 
@@ -123,8 +150,11 @@ p {
 
 .hero-eyebrow {
     display: inline-block;
+
     margin-bottom: 22px;
+
     color: var(--jharnax-accent-light);
+
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.2em;
@@ -143,20 +173,34 @@ p {
 
 .hero-text {
     max-width: 600px;
+
     margin-top: 28px;
+
     color: var(--jharnax-muted);
+
     font-size: 1.15rem;
     line-height: 1.7;
 }
 
+
 /* =========================
-   CONTENT
+   SECTIONS
 ========================= */
 
 .section {
     width: min(1200px, calc(100% - 40px));
+
     margin: 0 auto;
+
     padding: 70px 0;
+}
+
+.section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 30px;
 }
 
 .section-title {
@@ -169,11 +213,296 @@ p {
     line-height: 1.6;
 }
 
+
+/* =========================
+   SEARCH
+========================= */
+
+.game-search input {
+    width: 240px;
+
+    padding: 13px 16px;
+
+    border: 1px solid var(--jharnax-border);
+    border-radius: 12px;
+
+    outline: none;
+
+    background: var(--jharnax-surface);
+    color: var(--jharnax-text);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.game-search input::placeholder {
+    color: var(--jharnax-muted);
+}
+
+.game-search input:focus {
+    border-color: var(--jharnax-accent);
+
+    box-shadow:
+        0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+
+
+/* =========================
+   CATEGORY FILTERS
+========================= */
+
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    margin-top: 30px;
+}
+
+.filter-button {
+    padding: 9px 16px;
+
+    border: 1px solid var(--jharnax-border);
+    border-radius: 999px;
+
+    background: transparent;
+    color: var(--jharnax-muted);
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.filter-button:hover {
+    color: var(--jharnax-text);
+
+    border-color:
+        rgba(183, 148, 255, 0.35);
+}
+
+.filter-button.active {
+    background: var(--jharnax-accent);
+    color: white;
+
+    border-color: var(--jharnax-accent);
+}
+
+
+/* =========================
+   GAME GRID
+========================= */
+
+.game-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 22px;
+
+    margin-top: 30px;
+}
+
+
+/* =========================
+   GAME CARD
+========================= */
+
+.game-card {
+    overflow: hidden;
+
+    border: 1px solid var(--jharnax-border);
+    border-radius: 20px;
+
+    background: var(--jharnax-surface);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+
+    border-color:
+        rgba(183, 148, 255, 0.35);
+}
+
+
+/* =========================
+   GAME VISUAL
+========================= */
+
+.game-card-visual {
+    min-height: 180px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(139, 92, 246, 0.25),
+            transparent 60%
+        ),
+        var(--jharnax-surface-light);
+
+    border-bottom: 1px solid var(--jharnax-border);
+}
+
+.game-card-visual span {
+    font-size: 4rem;
+    font-weight: 900;
+
+    letter-spacing: -0.08em;
+
+    color: rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================
+   GAME CONTENT
+========================= */
+
+.game-card-content {
+    padding: 24px;
+}
+
+.game-category {
+    margin-bottom: 10px;
+
+    color: var(--jharnax-accent-light);
+
+    font-size: 0.7rem;
+    font-weight: 800;
+
+    letter-spacing: 0.15em;
+}
+
+.game-card h3 {
+    font-size: 1.35rem;
+}
+
+.game-card p {
+    margin-top: 10px;
+
+    color: var(--jharnax-muted);
+
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+
+/* =========================
+   GAME BUTTON
+========================= */
+
+.game-button {
+    width: 100%;
+
+    margin-top: 22px;
+    padding: 12px 16px;
+
+    border: 1px solid var(--jharnax-border);
+    border-radius: 10px;
+
+    background: transparent;
+    color: var(--jharnax-muted);
+
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   NO RESULTS
+========================= */
+
+.no-results {
+    padding: 50px 0;
+
+    color: var(--jharnax-muted);
+
+    text-align: center;
+}
+
+
+/* =========================
+   CATEGORIES
+========================= */
+
+.categories-section {
+    border-top: 1px solid var(--jharnax-border);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.site-footer {
+    border-top: 1px solid var(--jharnax-border);
+
+    margin-top: 40px;
+}
+
+.footer-inner {
+    width: min(1200px, calc(100% - 40px));
+
+    min-height: 130px;
+
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 30px;
+}
+
+.footer-inner p {
+    margin-top: 8px;
+
+    color: var(--jharnax-muted);
+
+    font-size: 0.85rem;
+}
+
+.footer-copy {
+    color: var(--jharnax-muted);
+
+    font-size: 0.8rem;
+}
+
+
 /* =========================
    RESPONSIVE
 ========================= */
 
-@media (max-width: 700px) {
+@media (max-width: 850px) {
+
+    .game-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .section-heading {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .game-search input {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 600px) {
+
     .navbar {
         min-height: 64px;
     }
@@ -197,5 +526,16 @@ p {
 
     .hero-text {
         font-size: 1rem;
+    }
+
+    .game-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+
+        padding: 30px 0;
     }
 }
