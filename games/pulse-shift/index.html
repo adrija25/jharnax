@@ -2,8 +2,13 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Tiny Empire — Jharnax</title>
 
@@ -13,9 +18,14 @@
     >
 
     <link rel="stylesheet" href="style.css">
+
 </head>
 
+
 <body>
+
+
+    <!-- HEADER -->
 
     <header class="game-header">
 
@@ -34,9 +44,13 @@
     </header>
 
 
+
+    <!-- GAME -->
+
     <main class="game-page">
 
-        <!-- GAME HEADER -->
+
+        <!-- GAME INTRO -->
 
         <section class="game-intro">
 
@@ -55,115 +69,174 @@
         </section>
 
 
+
         <!-- TURN -->
 
         <div class="turn-display">
+
             Turn <strong id="turnNumber">1</strong> / 12
+
         </div>
+
 
 
         <!-- RESOURCES -->
 
         <section class="resources">
 
+
             <div class="resource-card">
 
                 <div class="resource-top">
-                    <span>👥 Population</span>
-                    <strong id="populationValue">50</strong>
+
+                    <span>
+                        👥 Population
+                    </span>
+
+                    <strong id="populationValue">
+                        50
+                    </strong>
+
                 </div>
 
                 <div class="resource-bar">
+
                     <div
                         class="resource-fill population-fill"
                         id="populationBar"
                     ></div>
+
                 </div>
 
             </div>
 
 
+
             <div class="resource-card">
 
                 <div class="resource-top">
-                    <span>🌾 Food</span>
-                    <strong id="foodValue">50</strong>
+
+                    <span>
+                        🌾 Food
+                    </span>
+
+                    <strong id="foodValue">
+                        50
+                    </strong>
+
                 </div>
 
                 <div class="resource-bar">
+
                     <div
                         class="resource-fill food-fill"
                         id="foodBar"
                     ></div>
+
                 </div>
 
             </div>
 
 
+
             <div class="resource-card">
 
                 <div class="resource-top">
-                    <span>🪵 Materials</span>
-                    <strong id="materialsValue">50</strong>
+
+                    <span>
+                        🪵 Materials
+                    </span>
+
+                    <strong id="materialsValue">
+                        50
+                    </strong>
+
                 </div>
 
                 <div class="resource-bar">
+
                     <div
                         class="resource-fill materials-fill"
                         id="materialsBar"
                     ></div>
+
                 </div>
 
             </div>
 
 
+
             <div class="resource-card">
 
                 <div class="resource-top">
-                    <span>🪙 Wealth</span>
-                    <strong id="wealthValue">50</strong>
+
+                    <span>
+                        🪙 Wealth
+                    </span>
+
+                    <strong id="wealthValue">
+                        50
+                    </strong>
+
                 </div>
 
                 <div class="resource-bar">
+
                     <div
                         class="resource-fill wealth-fill"
                         id="wealthBar"
                     ></div>
+
                 </div>
 
             </div>
+
 
 
             <div class="resource-card">
 
                 <div class="resource-top">
-                    <span>❤️ Morale</span>
-                    <strong id="moraleValue">50</strong>
+
+                    <span>
+                        ❤️ Morale
+                    </span>
+
+                    <strong id="moraleValue">
+                        50
+                    </strong>
+
                 </div>
 
                 <div class="resource-bar">
+
                     <div
                         class="resource-fill morale-fill"
                         id="moraleBar"
                     ></div>
+
                 </div>
 
             </div>
 
+
         </section>
+
 
 
         <!-- EVENT -->
 
         <section class="event-panel">
 
+
             <div class="event-label">
                 CURRENT EVENT
             </div>
 
+
             <h2 id="eventTitle">
                 The Early Rains
             </h2>
+
 
             <p
                 class="event-description"
@@ -184,27 +257,35 @@
 
             </div>
 
+
         </section>
 
 
-        <!-- LOG -->
+
+        <!-- CIVILIZATION LOG -->
 
         <section class="civilization-log">
+
 
             <div class="log-heading">
                 Civilization Log
             </div>
 
+
             <div
                 class="log-entries"
                 id="logEntries"
             >
+
                 <p>
                     Your civilization begins its first era.
                 </p>
+
             </div>
 
+
         </section>
+
 
 
         <!-- END SCREEN -->
@@ -215,13 +296,16 @@
             hidden
         >
 
+
             <div class="game-category">
                 ERA COMPLETE
             </div>
 
+
             <h2 id="endingTitle">
                 Your Era Is Complete
             </h2>
+
 
             <p
                 class="ending-subtitle"
@@ -229,57 +313,193 @@
             ></p>
 
 
+
+            <!-- FINAL STATS -->
+
             <div class="final-stats">
 
+
                 <div>
-                    <span>Population</span>
+
+                    <span>
+                        Population
+                    </span>
+
                     <strong id="finalPopulation"></strong>
+
                 </div>
 
+
                 <div>
-                    <span>Food</span>
+
+                    <span>
+                        Food
+                    </span>
+
                     <strong id="finalFood"></strong>
+
                 </div>
 
+
                 <div>
-                    <span>Materials</span>
+
+                    <span>
+                        Materials
+                    </span>
+
                     <strong id="finalMaterials"></strong>
+
                 </div>
 
+
                 <div>
-                    <span>Wealth</span>
+
+                    <span>
+                        Wealth
+                    </span>
+
                     <strong id="finalWealth"></strong>
+
                 </div>
 
+
                 <div>
-                    <span>Morale</span>
+
+                    <span>
+                        Morale
+                    </span>
+
                     <strong id="finalMorale"></strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- CIVILIZATION PORTRAIT -->
+
+            <div
+                class="civilization-portrait"
+                id="civilizationPortrait"
+                aria-label="Portrait of your civilization"
+            >
+
+                <div class="portrait-frame">
+
+
+                    <!-- SKY -->
+
+                    <div class="portrait-sky"></div>
+
+
+                    <!-- DISTANT HORIZON -->
+
+                    <div class="portrait-horizon"></div>
+
+
+                    <!-- SUN -->
+
+                    <div class="portrait-sun"></div>
+
+
+                    <!-- MOUNTAINS -->
+
+                    <div class="portrait-mountains">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+
+                    <!-- LAND -->
+
+                    <div class="portrait-land"></div>
+
+
+                    <!-- CITY -->
+
+                    <div class="portrait-city">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+
+                    <!-- CITY LIGHTS -->
+
+                    <div class="portrait-lights">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+
+                    <!-- ATMOSPHERE -->
+
+                    <div class="portrait-glow"></div>
+
+
+                    <!-- PORTRAIT LABEL -->
+
+                    <div class="portrait-label">
+                        YOUR CIVILIZATION
+                    </div>
+
+
                 </div>
 
             </div>
 
 
+
+            <!-- FINAL STORY -->
+
             <div class="final-story">
+
 
                 <h3>
                     Your Civilization
                 </h3>
 
+
                 <p id="finalStory"></p>
+
 
             </div>
 
 
+
+            <!-- DEFINING TRAIT -->
+
             <div class="defining-trait">
+
 
                 <span>
                     Your defining trait
                 </span>
 
+
                 <strong id="definingTrait"></strong>
+
 
             </div>
 
+
+
+            <!-- ACTIONS -->
 
             <button
                 id="playAgainButton"
@@ -297,12 +517,18 @@
                 Return to Jharnax
             </a>
 
+
         </section>
+
 
     </main>
 
 
+
+    <!-- SCRIPT -->
+
     <script src="script.js"></script>
+
 
 </body>
 
