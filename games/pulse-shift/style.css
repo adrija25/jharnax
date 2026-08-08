@@ -18,6 +18,11 @@
     --morale: #f28bb5;
 }
 
+
+/* =========================
+   RESET
+========================= */
+
 * {
     box-sizing: border-box;
 }
@@ -398,7 +403,7 @@ a {
 
 
 /* =========================
-   LOG
+   CIVILIZATION LOG
 ========================= */
 
 .civilization-log {
@@ -477,6 +482,11 @@ a {
     line-height: 1.6;
 }
 
+
+/* =========================
+   FINAL STATS
+========================= */
+
 .final-stats {
     max-width: 750px;
 
@@ -513,6 +523,331 @@ a {
     font-size: 1.2rem;
 }
 
+
+/* =========================
+   CIVILIZATION PORTRAIT
+========================= */
+
+.civilization-portrait {
+    width: min(760px, 100%);
+
+    margin: 42px auto 35px;
+
+    padding: 10px;
+
+    border: 1px solid rgba(183, 148, 255, 0.22);
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(139, 92, 246, 0.18),
+            rgba(17, 17, 36, 0.8)
+        );
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.35),
+        0 0 60px rgba(139, 92, 246, 0.08);
+}
+
+.portrait-frame {
+    position: relative;
+
+    width: 100%;
+
+    min-height: 360px;
+
+    overflow: hidden;
+
+    border-radius: 16px;
+
+    background: #0d0d1c;
+}
+
+
+/* SKY */
+
+.portrait-sky {
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #17122f 0%,
+            #29204d 38%,
+            #604b72 68%,
+            #171426 100%
+        );
+}
+
+
+/* HORIZON */
+
+.portrait-horizon {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    bottom: 30%;
+
+    height: 1px;
+
+    background:
+        rgba(255, 255, 255, 0.12);
+
+    box-shadow:
+        0 0 30px rgba(183, 148, 255, 0.25);
+}
+
+
+/* SUN */
+
+.portrait-sun {
+    position: absolute;
+
+    width: 86px;
+    height: 86px;
+
+    top: 65px;
+    right: 15%;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 229, 168, 1) 0%,
+            rgba(246, 190, 121, 0.85) 45%,
+            rgba(246, 190, 121, 0) 72%
+        );
+
+    box-shadow:
+        0 0 55px rgba(246, 190, 121, 0.32);
+}
+
+
+/* MOUNTAINS */
+
+.portrait-mountains {
+    position: absolute;
+
+    left: -5%;
+    right: -5%;
+
+    bottom: 29%;
+
+    height: 34%;
+}
+
+.portrait-mountains span {
+    position: absolute;
+
+    bottom: 0;
+
+    width: 0;
+    height: 0;
+
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-bottom: 180px solid rgba(13, 13, 28, 0.65);
+}
+
+.portrait-mountains span:nth-child(1) {
+    left: 2%;
+
+    transform: scale(0.85);
+}
+
+.portrait-mountains span:nth-child(2) {
+    left: 30%;
+
+    transform: scale(1.15);
+}
+
+.portrait-mountains span:nth-child(3) {
+    right: 2%;
+
+    transform: scale(0.9);
+}
+
+
+/* LAND */
+
+.portrait-land {
+    position: absolute;
+
+    left: -5%;
+    right: -5%;
+
+    bottom: -8%;
+
+    height: 42%;
+
+    border-radius: 50% 50% 0 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #17182a,
+            #080812
+        );
+
+    transform: rotate(-2deg);
+}
+
+
+/* CITY */
+
+.portrait-city {
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 25%;
+
+    width: 300px;
+    height: 150px;
+
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: center;
+
+    gap: 8px;
+
+    transform: translateX(-50%);
+}
+
+.portrait-city span {
+    position: relative;
+
+    display: block;
+
+    width: 42px;
+
+    border-radius: 3px 3px 0 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #242342,
+            #0d0d1b
+        );
+
+    border: 1px solid rgba(183, 148, 255, 0.12);
+
+    box-shadow:
+        0 -5px 20px rgba(139, 92, 246, 0.08);
+}
+
+.portrait-city span:nth-child(1) {
+    height: 72px;
+}
+
+.portrait-city span:nth-child(2) {
+    height: 112px;
+}
+
+.portrait-city span:nth-child(3) {
+    height: 145px;
+    width: 50px;
+}
+
+.portrait-city span:nth-child(4) {
+    height: 92px;
+}
+
+.portrait-city span:nth-child(5) {
+    height: 62px;
+}
+
+
+/* CITY LIGHTS */
+
+.portrait-lights {
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 27%;
+
+    width: 255px;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 35px;
+
+    transform: translateX(-50%);
+}
+
+.portrait-lights span {
+    width: 4px;
+    height: 4px;
+
+    border-radius: 50%;
+
+    background: #e8c76a;
+
+    box-shadow:
+        0 0 8px rgba(232, 199, 106, 0.65);
+}
+
+
+/* ATMOSPHERIC GLOW */
+
+.portrait-glow {
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 75%,
+            rgba(139, 92, 246, 0.16),
+            transparent 38%
+        );
+}
+
+
+/* PORTRAIT LABEL */
+
+.portrait-label {
+    position: absolute;
+
+    left: 24px;
+    bottom: 20px;
+
+    padding: 8px 12px;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+
+    background:
+        rgba(8, 8, 18, 0.62);
+
+    color: rgba(245, 243, 255, 0.75);
+
+    font-size: 0.62rem;
+    font-weight: 800;
+
+    letter-spacing: 0.16em;
+
+    backdrop-filter: blur(8px);
+}
+
+
+/* =========================
+   FINAL STORY
+========================= */
+
 .final-story {
     max-width: 650px;
 
@@ -534,6 +869,11 @@ a {
 
     line-height: 1.75;
 }
+
+
+/* =========================
+   DEFINING TRAIT
+========================= */
 
 .defining-trait {
     margin: 35px auto;
@@ -559,6 +899,11 @@ a {
     font-size: 1.8rem;
 }
 
+
+/* =========================
+   BUTTONS
+========================= */
+
 .primary-button,
 .secondary-button {
     display: inline-block;
@@ -578,6 +923,7 @@ a {
     border: 0;
 
     background: var(--accent);
+
     color: white;
 }
 
@@ -639,6 +985,26 @@ a {
     .final-stats div:last-child {
         grid-column: span 2;
     }
+
+    .portrait-frame {
+        min-height: 300px;
+    }
+
+    .portrait-city {
+        transform:
+            translateX(-50%)
+            scale(0.82);
+
+        transform-origin: bottom center;
+    }
+
+    .portrait-lights {
+        transform:
+            translateX(-50%)
+            scale(0.82);
+
+        transform-origin: bottom center;
+    }
 }
 
 
@@ -680,4 +1046,61 @@ a {
     .final-stats div:last-child {
         grid-column: auto;
     }
+
+    .end-screen {
+        padding:
+            45px 18px;
+    }
+
+    .civilization-portrait {
+        margin-top: 35px;
+
+        padding: 7px;
+
+        border-radius: 17px;
+    }
+
+    .portrait-frame {
+        min-height: 240px;
+
+        border-radius: 12px;
+    }
+
+    .portrait-sun {
+        width: 62px;
+        height: 62px;
+
+        top: 45px;
+        right: 12%;
+    }
+
+    .portrait-mountains span {
+        border-left-width: 100px;
+        border-right-width: 100px;
+        border-bottom-width: 120px;
+    }
+
+    .portrait-city {
+        bottom: 24%;
+
+        transform:
+            translateX(-50%)
+            scale(0.62);
+    }
+
+    .portrait-lights {
+        bottom: 26%;
+
+        transform:
+            translateX(-50%)
+            scale(0.62);
+    }
+
+    .portrait-label {
+        left: 14px;
+        bottom: 14px;
+
+        font-size: 0.55rem;
+    }
+
 }
