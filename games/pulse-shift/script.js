@@ -37,6 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Invest in the harvest",
                     description:
                         "Strengthen food production while the rain lasts.",
+                    log:
+                        "You invested in the harvest.",
                     effects: {
                         food: 15,
                         materials: -10,
@@ -49,6 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Protect the roads",
                     description:
                         "Keep trade and movement flowing through the rain.",
+                    log:
+                        "You invested in protecting the roads.",
                     effects: {
                         materials: -12,
                         wealth: 8
@@ -60,6 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Preserve your reserves",
                     description:
                         "Spend nothing and wait for the weather to pass.",
+                    log:
+                        "You preserved your reserves and waited.",
                     effects: {
                         wealth: 5,
                         food: -5,
@@ -82,6 +88,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Share your stores",
                     description:
                         "Give them enough to survive the shortage.",
+                    log:
+                        "You shared your food with a neighbouring settlement.",
                     effects: {
                         food: -12,
                         morale: 8,
@@ -94,6 +102,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Sell it at a fair price",
                     description:
                         "Help them while strengthening your own economy.",
+                    log:
+                        "You sold food to your neighbours at a fair price.",
                     effects: {
                         food: -8,
                         wealth: 8,
@@ -106,6 +116,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Protect your reserves",
                     description:
                         "Your own people must come first.",
+                    log:
+                        "You protected your own food reserves.",
                     effects: {
                         morale: -6,
                         food: 3
@@ -127,6 +139,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Accept the deal",
                     description:
                         "Take the opportunity before it disappears.",
+                    log:
+                        "You accepted the merchant's deal.",
                     effects: {
                         wealth: 14,
                         materials: -8
@@ -138,6 +152,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Negotiate carefully",
                     description:
                         "Try to improve the terms before committing.",
+                    log:
+                        "You negotiated carefully with the merchant.",
                     effects: {
                         wealth: 7,
                         morale: 2
@@ -149,6 +165,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Decline",
                     description:
                         "Avoid the uncertainty and keep your resources.",
+                    log:
+                        "You declined the merchant's offer.",
                     effects: {
                         morale: 2
                     }
@@ -169,6 +187,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Open the mine",
                     description:
                         "Exploit the discovery and grow wealthy.",
+                    log:
+                        "You opened the new mine.",
                     effects: {
                         wealth: 15,
                         materials: 8,
@@ -180,6 +200,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Limit the mining",
                     description:
                         "Take some of the opportunity without going too far.",
+                    log:
+                        "You limited the mining operation.",
                     effects: {
                         wealth: 8,
                         materials: 4,
@@ -191,6 +213,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Leave it untouched",
                     description:
                         "Preserve the land and your current way of life.",
+                    log:
+                        "You left the mine untouched.",
                     effects: {
                         morale: 5
                     }
@@ -211,6 +235,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Hold a grand festival",
                     description:
                         "Give the entire settlement a celebration to remember.",
+                    log:
+                        "You held a grand festival for your people.",
                     effects: {
                         morale: 14,
                         wealth: -10,
@@ -222,6 +248,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Hold a modest festival",
                     description:
                         "Celebrate without spending too much.",
+                    log:
+                        "You held a modest festival.",
                     effects: {
                         morale: 8,
                         wealth: -4
@@ -232,6 +260,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Cancel the festival",
                     description:
                         "Keep resources for more urgent needs.",
+                    log:
+                        "You cancelled the festival.",
                     effects: {
                         wealth: 4,
                         morale: -8
@@ -253,6 +283,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Ration food",
                     description:
                         "Protect the remaining supply by reducing consumption.",
+                    log:
+                        "You introduced food rationing.",
                     effects: {
                         food: 8,
                         morale: -8
@@ -263,6 +295,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Buy food",
                     description:
                         "Spend wealth to bring supplies into the settlement.",
+                    log:
+                        "You bought food from outside the settlement.",
                     effects: {
                         food: 15,
                         wealth: -12
@@ -273,6 +307,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Use emergency stores",
                     description:
                         "Solve the immediate shortage using your reserves.",
+                    log:
+                        "You used the emergency stores.",
                     effects: {
                         food: 10,
                         materials: -6
@@ -294,6 +330,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Build it",
                     description:
                         "Make the ambitious investment.",
+                    log:
+                        "You approved the ambitious building project.",
                     effects: {
                         materials: -15,
                         morale: 10,
@@ -305,6 +343,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Build something smaller",
                     description:
                         "Create something useful without the full expense.",
+                    log:
+                        "You approved a smaller building project.",
                     effects: {
                         materials: -8,
                         morale: 5,
@@ -316,6 +356,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Reject the proposal",
                     description:
                         "Keep your materials for more immediate needs.",
+                    log:
+                        "You rejected the building proposal.",
                     effects: {
                         materials: 4
                     }
@@ -336,6 +378,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Give them the land",
                     description:
                         "Avoid escalation by making a difficult concession.",
+                    log:
+                        "You gave the neighbouring settlement the disputed land.",
                     effects: {
                         materials: -8,
                         morale: 4
@@ -347,6 +391,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Negotiate",
                     description:
                         "Try to find a compromise.",
+                    log:
+                        "You negotiated over the disputed land.",
                     effects: {
                         wealth: -3,
                         morale: 5
@@ -358,6 +404,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Refuse",
                     description:
                         "Stand firmly behind your claim.",
+                    log:
+                        "You refused to surrender the disputed land.",
                     effects: {
                         morale: -3,
                         materials: 4
@@ -380,6 +428,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Plant them everywhere",
                     description:
                         "Take the gamble and embrace the discovery.",
+                    log:
+                        "You planted the strange seeds across the settlement.",
                     effects: {
                         food: 18,
                         morale: 3
@@ -391,6 +441,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Test them first",
                     description:
                         "Experiment carefully before committing.",
+                    log:
+                        "You tested the strange seeds before planting them widely.",
                     effects: {
                         food: 7,
                         materials: -3
@@ -402,6 +454,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Reject them",
                     description:
                         "Stick with crops you already understand.",
+                    log:
+                        "You rejected the unfamiliar seeds.",
                     effects: {
                         food: 2
                     }
@@ -422,6 +476,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Close the markets",
                     description:
                         "Reduce contact and protect the population.",
+                    log:
+                        "You closed the markets to protect the population.",
                     effects: {
                         wealth: -10,
                         population: 3
@@ -432,6 +488,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Continue normally",
                     description:
                         "Keep the economy moving despite the risk.",
+                    log:
+                        "You kept the markets open despite the illness.",
                     effects: {
                         wealth: 8,
                         population: -7
@@ -442,6 +500,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Fund public care",
                     description:
                         "Spend heavily to protect your people.",
+                    log:
+                        "You funded public care during the illness.",
                     effects: {
                         wealth: -12,
                         population: 6,
@@ -464,6 +524,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Welcome them",
                     description:
                         "Open your settlement to their knowledge and skills.",
+                    log:
+                        "You welcomed skilled outsiders into your civilization.",
                     effects: {
                         population: 8,
                         materials: 7,
@@ -476,6 +538,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Offer limited settlement",
                     description:
                         "Allow some of them to join while keeping growth controlled.",
+                    log:
+                        "You offered the skilled workers limited settlement.",
                     effects: {
                         population: 4,
                         materials: 4
@@ -486,6 +550,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Turn them away",
                     description:
                         "Protect the stability of your existing population.",
+                    log:
+                        "You turned the skilled workers away.",
                     effects: {
                         morale: -4
                     }
@@ -506,6 +572,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Fund the library",
                     description:
                         "Invest in knowledge that may benefit future generations.",
+                    log:
+                        "You funded the great library.",
                     effects: {
                         wealth: -10,
                         morale: 7,
@@ -518,6 +586,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Fund a small archive",
                     description:
                         "Preserve some knowledge without the full expense.",
+                    log:
+                        "You funded a smaller archive.",
                     effects: {
                         wealth: -5,
                         morale: 4
@@ -529,6 +599,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Refuse",
                     description:
                         "Keep your resources focused on immediate needs.",
+                    log:
+                        "You refused to fund the library.",
                     effects: {
                         wealth: 3
                     }
@@ -549,6 +621,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Repair immediately",
                     description:
                         "Restore the connection before the disruption grows.",
+                    log:
+                        "You repaired the bridge immediately.",
                     effects: {
                         materials: -12,
                         wealth: 8
@@ -559,6 +633,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Build a cheaper replacement",
                     description:
                         "Accept a slower solution to conserve materials.",
+                    log:
+                        "You built a cheaper replacement for the bridge.",
                     effects: {
                         materials: -7,
                         wealth: 3
@@ -569,6 +645,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Reroute traffic",
                     description:
                         "Avoid the repair cost and accept temporary disruption.",
+                    log:
+                        "You rerouted traffic around the broken bridge.",
                     effects: {
                         wealth: -8,
                         materials: 3
@@ -590,6 +668,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Tax the merchant",
                     description:
                         "Redistribute part of the wealth.",
+                    log:
+                        "You taxed the wealthy merchant.",
                     effects: {
                         wealth: 8,
                         morale: 5
@@ -600,6 +680,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Reward the merchant",
                     description:
                         "Encourage further investment and commerce.",
+                    log:
+                        "You rewarded the wealthy merchant.",
                     effects: {
                         wealth: 12,
                         morale: -3
@@ -611,6 +693,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Leave them alone",
                     description:
                         "Avoid interfering with private wealth.",
+                    log:
+                        "You left the merchant's wealth untouched.",
                     effects: {
                         morale: -2
                     }
@@ -631,6 +715,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Protect the farmland",
                     description:
                         "Spend materials to preserve your food production.",
+                    log:
+                        "You protected the farmland from the drought.",
                     effects: {
                         materials: -12,
                         food: 10
@@ -641,6 +727,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Buy food abroad",
                     description:
                         "Use wealth to secure supplies elsewhere.",
+                    log:
+                        "You bought food from abroad.",
                     effects: {
                         wealth: -12,
                         food: 15
@@ -652,6 +740,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Trust the rains",
                     description:
                         "Wait and hope the weather changes.",
+                    log:
+                        "You chose to wait for the rains.",
                     effects: {
                         food: -15,
                         wealth: 4
@@ -673,6 +763,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Build schools",
                     description:
                         "Invest in education for the future.",
+                    log:
+                        "You built schools for the children.",
                     effects: {
                         wealth: -9,
                         materials: -6,
@@ -685,6 +777,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Create apprenticeships",
                     description:
                         "Teach practical skills through work.",
+                    log:
+                        "You created apprenticeships for young people.",
                     effects: {
                         materials: 5,
                         morale: 5
@@ -696,6 +790,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Ignore the request",
                     description:
                         "Keep resources focused elsewhere.",
+                    log:
+                        "You chose not to invest in education.",
                     effects: {
                         wealth: 3,
                         morale: -7
@@ -717,6 +813,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Allow it freely",
                     description:
                         "Let people experiment with a new form of commerce.",
+                    log:
+                        "You allowed the night market to operate freely.",
                     effects: {
                         wealth: 10,
                         morale: 7
@@ -728,6 +826,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Regulate it",
                     description:
                         "Allow the market with clear rules.",
+                    log:
+                        "You regulated the new night market.",
                     effects: {
                         wealth: 6,
                         morale: 4
@@ -738,6 +838,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Ban it",
                     description:
                         "Keep the settlement predictable and controlled.",
+                    log:
+                        "You banned the night market.",
                     effects: {
                         morale: -6,
                         materials: 3
@@ -760,6 +862,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Accept immediately",
                     description:
                         "Take the enormous economic opportunity.",
+                    log:
+                        "You accepted the major trade agreement.",
                     effects: {
                         wealth: 18,
                         morale: -3
@@ -771,6 +875,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Negotiate carefully",
                     description:
                         "Seek prosperity without giving away too much independence.",
+                    log:
+                        "You negotiated carefully over the trade agreement.",
                     effects: {
                         wealth: 9,
                         morale: 2
@@ -782,6 +888,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Reject it",
                     description:
                         "Keep your independence and accept slower growth.",
+                    log:
+                        "You rejected the major trade agreement.",
                     effects: {
                         morale: 5
                     },
@@ -803,6 +911,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Evacuate vulnerable areas",
                     description:
                         "Protect people even if infrastructure is damaged.",
+                    log:
+                        "You evacuated vulnerable areas before the storm.",
                     effects: {
                         materials: -8,
                         population: 4
@@ -813,6 +923,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Build defenses",
                     description:
                         "Spend heavily to protect the settlement itself.",
+                    log:
+                        "You built defenses against the storm.",
                     effects: {
                         materials: -15,
                         population: 6,
@@ -825,6 +937,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "Do nothing",
                     description:
                         "Save your resources and accept the risk.",
+                    log:
+                        "You chose not to prepare for the storm.",
                     effects: {
                         population: -12,
                         materials: 5,
@@ -847,6 +961,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "A prosperous civilization",
                     description:
                         "Choose economic opportunity and growth.",
+                    log:
+                        "You chose to pursue a prosperous civilization.",
                     effects: {
                         wealth: 7
                     },
@@ -857,6 +973,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "A strong civilization",
                     description:
                         "Choose stability and protection.",
+                    log:
+                        "You chose to build a strong civilization.",
                     effects: {
                         materials: 7
                     },
@@ -867,6 +985,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: "A happy civilization",
                     description:
                         "Choose the wellbeing of your people.",
+                    log:
+                        "You chose to build a happy civilization.",
                     effects: {
                         morale: 10
                     },
@@ -1039,19 +1159,39 @@ document.addEventListener("DOMContentLoaded", () => {
                     "choice-button";
 
 
-                button.innerHTML = `
-                    <span class="choice-number">
-                        CHOICE ${index + 1}
-                    </span>
+                const number =
+                    document.createElement("span");
 
-                    <span class="choice-title">
-                        ${choice.title}
-                    </span>
+                number.className =
+                    "choice-number";
 
-                    <span class="choice-description">
-                        ${choice.description}
-                    </span>
-                `;
+                number.textContent =
+                    `CHOICE ${index + 1}`;
+
+
+                const title =
+                    document.createElement("span");
+
+                title.className =
+                    "choice-title";
+
+                title.textContent =
+                    choice.title;
+
+
+                const description =
+                    document.createElement("span");
+
+                description.className =
+                    "choice-description";
+
+                description.textContent =
+                    choice.description;
+
+
+                button.appendChild(number);
+                button.appendChild(title);
+                button.appendChild(description);
 
 
                 button.addEventListener(
@@ -1093,14 +1233,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        const resultText =
-            describeChoice(
-                event,
-                choice
-            );
-
-
-        addLog(resultText);
+        addLog(
+            choice.log ||
+            `You chose: ${choice.title}.`
+        );
 
 
         applyNaturalChanges();
@@ -1113,9 +1249,13 @@ document.addEventListener("DOMContentLoaded", () => {
             ".choice-button"
         ).forEach(
             button => {
+
                 button.disabled = true;
+
                 button.style.opacity = "0.5";
+
                 button.style.cursor = "default";
+
             }
         );
 
@@ -1143,19 +1283,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    function describeChoice(event, choice) {
-
-        return `You chose to ${choice.title.toLowerCase()}.`;
-
-    }
-
-
     function applyNaturalChanges() {
-
-        /*
-         * Food is consumed based on population.
-         * Larger civilizations require more food.
-         */
 
         const foodCost =
             state.population >= 75
@@ -1168,11 +1296,6 @@ document.addEventListener("DOMContentLoaded", () => {
         state.food -= foodCost;
 
 
-        /*
-         * Healthy food supplies and morale
-         * encourage gradual population growth.
-         */
-
         if (
             state.food >= 65 &&
             state.morale >= 60
@@ -1183,22 +1306,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /*
-         * Very low food creates pressure.
-         */
-
         if (state.food <= 20) {
 
             state.population -= 3;
+
             state.morale -= 4;
 
         }
 
-
-        /*
-         * Extremely low morale creates
-         * gradual population decline.
-         */
 
         if (state.morale <= 20) {
 
