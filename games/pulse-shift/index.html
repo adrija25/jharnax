@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Pulse Shift — Jharnax</title>
+    <title>Tiny Empire — Jharnax</title>
 
     <meta
         name="description"
-        content="Pulse Shift — test your reaction speed in an original Jharnax browser game."
+        content="Tiny Empire — build a civilization through choices, consequences and strategy."
     >
 
     <link rel="stylesheet" href="style.css">
@@ -23,8 +23,12 @@
             JHARN<span>AX</span>
         </a>
 
+        <div class="game-header-title">
+            TINY EMPIRE
+        </div>
+
         <a href="../../index.html" class="back-link">
-            ← Back to Jharnax
+            ← Jharnax
         </a>
 
     </header>
@@ -32,91 +36,266 @@
 
     <main class="game-page">
 
+        <!-- GAME HEADER -->
+
         <section class="game-intro">
 
             <div class="game-category">
-                REACTION
+                STRATEGY · SIMULATION
             </div>
 
             <h1>
-                Pulse Shift
+                Tiny Empire
             </h1>
 
             <p>
-                Wait for the pulse. React as fast as you can.
+                Build a civilization. Make choices. Live with the consequences.
             </p>
 
         </section>
 
 
-        <section class="game-panel">
+        <!-- TURN -->
 
-            <div class="game-stats">
+        <div class="turn-display">
+            Turn <strong id="turnNumber">1</strong> / 12
+        </div>
 
-                <div class="stat">
-                    <span>Round</span>
-                    <strong id="round">0 / 5</strong>
+
+        <!-- RESOURCES -->
+
+        <section class="resources">
+
+            <div class="resource-card">
+
+                <div class="resource-top">
+                    <span>👥 Population</span>
+                    <strong id="populationValue">50</strong>
                 </div>
 
-                <div class="stat">
-                    <span>Last</span>
-                    <strong id="lastTime">—</strong>
-                </div>
-
-                <div class="stat">
-                    <span>Best</span>
-                    <strong id="bestTime">—</strong>
-                </div>
-
-                <div class="stat">
-                    <span>Average</span>
-                    <strong id="averageTime">—</strong>
+                <div class="resource-bar">
+                    <div
+                        class="resource-fill population-fill"
+                        id="populationBar"
+                    ></div>
                 </div>
 
             </div>
 
 
-            <button
-                id="gameArea"
-                class="game-area"
-                type="button"
-            >
+            <div class="resource-card">
 
-                <span id="gameMessage">
-                    Press to start
-                </span>
+                <div class="resource-top">
+                    <span>🌾 Food</span>
+                    <strong id="foodValue">50</strong>
+                </div>
 
-            </button>
+                <div class="resource-bar">
+                    <div
+                        class="resource-fill food-fill"
+                        id="foodBar"
+                    ></div>
+                </div>
+
+            </div>
 
 
-            <div class="game-actions">
+            <div class="resource-card">
 
-                <button
-                    id="startButton"
-                    class="primary-button"
-                    type="button"
-                >
-                    Start Game
-                </button>
+                <div class="resource-top">
+                    <span>🪵 Materials</span>
+                    <strong id="materialsValue">50</strong>
+                </div>
+
+                <div class="resource-bar">
+                    <div
+                        class="resource-fill materials-fill"
+                        id="materialsBar"
+                    ></div>
+                </div>
+
+            </div>
+
+
+            <div class="resource-card">
+
+                <div class="resource-top">
+                    <span>🪙 Wealth</span>
+                    <strong id="wealthValue">50</strong>
+                </div>
+
+                <div class="resource-bar">
+                    <div
+                        class="resource-fill wealth-fill"
+                        id="wealthBar"
+                    ></div>
+                </div>
+
+            </div>
+
+
+            <div class="resource-card">
+
+                <div class="resource-top">
+                    <span>❤️ Morale</span>
+                    <strong id="moraleValue">50</strong>
+                </div>
+
+                <div class="resource-bar">
+                    <div
+                        class="resource-fill morale-fill"
+                        id="moraleBar"
+                    ></div>
+                </div>
 
             </div>
 
         </section>
 
 
-        <section class="instructions">
+        <!-- EVENT -->
 
-            <h2>
-                How to play
+        <section class="event-panel">
+
+            <div class="event-label">
+                CURRENT EVENT
+            </div>
+
+            <h2 id="eventTitle">
+                The Early Rains
             </h2>
 
-            <ol>
-                <li>Press <strong>Start Game</strong>.</li>
-                <li>Wait for the pulse.</li>
-                <li>Click the game area immediately.</li>
-                <li>Complete five rounds.</li>
-                <li>Try to beat your best reaction time.</li>
-            </ol>
+            <p
+                class="event-description"
+                id="eventDescription"
+            >
+                Heavy rain has arrived earlier than expected.
+                Your farmers see an opportunity, but the roads
+                are beginning to deteriorate.
+            </p>
+
+
+            <div
+                class="choices"
+                id="choices"
+            >
+
+                <!-- Choices generated by JavaScript -->
+
+            </div>
+
+        </section>
+
+
+        <!-- LOG -->
+
+        <section class="civilization-log">
+
+            <div class="log-heading">
+                Civilization Log
+            </div>
+
+            <div
+                class="log-entries"
+                id="logEntries"
+            >
+                <p>
+                    Your civilization begins its first era.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- END SCREEN -->
+
+        <section
+            class="end-screen"
+            id="endScreen"
+            hidden
+        >
+
+            <div class="game-category">
+                ERA COMPLETE
+            </div>
+
+            <h2 id="endingTitle">
+                Your Era Is Complete
+            </h2>
+
+            <p
+                class="ending-subtitle"
+                id="endingSubtitle"
+            ></p>
+
+
+            <div class="final-stats">
+
+                <div>
+                    <span>Population</span>
+                    <strong id="finalPopulation"></strong>
+                </div>
+
+                <div>
+                    <span>Food</span>
+                    <strong id="finalFood"></strong>
+                </div>
+
+                <div>
+                    <span>Materials</span>
+                    <strong id="finalMaterials"></strong>
+                </div>
+
+                <div>
+                    <span>Wealth</span>
+                    <strong id="finalWealth"></strong>
+                </div>
+
+                <div>
+                    <span>Morale</span>
+                    <strong id="finalMorale"></strong>
+                </div>
+
+            </div>
+
+
+            <div class="final-story">
+
+                <h3>
+                    Your Civilization
+                </h3>
+
+                <p id="finalStory"></p>
+
+            </div>
+
+
+            <div class="defining-trait">
+
+                <span>
+                    Your defining trait
+                </span>
+
+                <strong id="definingTrait"></strong>
+
+            </div>
+
+
+            <button
+                id="playAgainButton"
+                class="primary-button"
+                type="button"
+            >
+                Build Again
+            </button>
+
+
+            <a
+                href="../../index.html"
+                class="secondary-button"
+            >
+                Return to Jharnax
+            </a>
 
         </section>
 
