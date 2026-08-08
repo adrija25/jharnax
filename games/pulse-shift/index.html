@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pulse Shift — Jharnax</title>
+
+    <meta
+        name="description"
+        content="Pulse Shift — test your reaction speed in an original Jharnax browser game."
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="game-header">
+
+        <a href="../../index.html" class="brand">
+            JHARN<span>AX</span>
+        </a>
+
+        <a href="../../index.html" class="back-link">
+            ← Back to Jharnax
+        </a>
+
+    </header>
+
+
+    <main class="game-page">
+
+        <section class="game-intro">
+
+            <div class="game-category">
+                REACTION
+            </div>
+
+            <h1>
+                Pulse Shift
+            </h1>
+
+            <p>
+                Wait for the pulse. React as fast as you can.
+            </p>
+
+        </section>
+
+
+        <section class="game-panel">
+
+            <div class="game-stats">
+
+                <div class="stat">
+                    <span>Round</span>
+                    <strong id="round">0 / 5</strong>
+                </div>
+
+                <div class="stat">
+                    <span>Last</span>
+                    <strong id="lastTime">—</strong>
+                </div>
+
+                <div class="stat">
+                    <span>Best</span>
+                    <strong id="bestTime">—</strong>
+                </div>
+
+                <div class="stat">
+                    <span>Average</span>
+                    <strong id="averageTime">—</strong>
+                </div>
+
+            </div>
+
+
+            <button
+                id="gameArea"
+                class="game-area"
+                type="button"
+            >
+
+                <span id="gameMessage">
+                    Press to start
+                </span>
+
+            </button>
+
+
+            <div class="game-actions">
+
+                <button
+                    id="startButton"
+                    class="primary-button"
+                    type="button"
+                >
+                    Start Game
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <section class="instructions">
+
+            <h2>
+                How to play
+            </h2>
+
+            <ol>
+                <li>Press <strong>Start Game</strong>.</li>
+                <li>Wait for the pulse.</li>
+                <li>Click the game area immediately.</li>
+                <li>Complete five rounds.</li>
+                <li>Try to beat your best reaction time.</li>
+            </ol>
+
+        </section>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
