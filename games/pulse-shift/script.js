@@ -1,247 +1,1510 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const gameArea = document.getElementById("gameArea");
-    const startButton = document.getElementById("startButton");
-    const gameMessage = document.getElementById("gameMessage");
+    const TOTAL_TURNS = 12;
 
-    const roundDisplay = document.getElementById("round");
-    const lastTimeDisplay = document.getElementById("lastTime");
-    const bestTimeDisplay = document.getElementById("bestTime");
-    const averageTimeDisplay = document.getElementById("averageTime");
+    let turn = 1;
+
+    let state = {
+        population: 50,
+        food: 50,
+        materials: 50,
+        wealth: 50,
+        morale: 50
+    };
+
+    let history = [];
+
+    let flags = {
+        tradeFocus: 0,
+        education: 0,
+        cooperation: 0,
+        experimentation: 0,
+        defense: 0,
+        growth: 0
+    };
 
 
-    const TOTAL_ROUNDS = 5;
+    const events = [
 
-    let round = 0;
-    let times = [];
+        {
+            title: "The Early Rains",
+            description:
+                "Heavy rain has arrived earlier than expected. Your farmers see an opportunity, but the roads are beginning to deteriorate.",
 
-    let waitingForPulse = false;
-    let gameRunning = false;
+            choices: [
 
-    let pulseTimeout = null;
-    let pulseStartTime = null;
+                {
+                    title: "Invest in the harvest",
+                    description:
+                        "Strengthen food production while the rain lasts.",
+                    effects: {
+                        food: 15,
+                        materials: -10,
+                        wealth: -5
+                    },
+                    flag: "growth"
+                },
+
+                {
+                    title: "Protect the roads",
+                    description:
+                        "Keep trade and movement flowing through the rain.",
+                    effects: {
+                        materials: -12,
+                        wealth: 8
+                    },
+                    flag: "tradeFocus"
+                },
+
+                {
+                    title: "Preserve your reserves",
+                    description:
+                        "Spend nothing and wait for the weather to pass.",
+                    effects: {
+                        wealth: 5,
+                        food: -5,
+                        morale: -2
+                    }
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The Hungry Neighbour",
+            description:
+                "A nearby settlement has suffered a poor harvest and asks whether you can spare some food.",
+
+            choices: [
+
+                {
+                    title: "Share your stores",
+                    description:
+                        "Give them enough to survive the shortage.",
+                    effects: {
+                        food: -12,
+                        morale: 8,
+                        wealth: -3
+                    },
+                    flag: "cooperation"
+                },
+
+                {
+                    title: "Sell it at a fair price",
+                    description:
+                        "Help them while strengthening your own economy.",
+                    effects: {
+                        food: -8,
+                        wealth: 8,
+                        morale: 2
+                    },
+                    flag: "tradeFocus"
+                },
+
+                {
+                    title: "Protect your reserves",
+                    description:
+                        "Your own people must come first.",
+                    effects: {
+                        morale: -6,
+                        food: 3
+                    }
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The Travelling Merchant",
+            description:
+                "A merchant arrives with unusual goods and offers you a deal that may benefit your settlement.",
+
+            choices: [
+
+                {
+                    title: "Accept the deal",
+                    description:
+                        "Take the opportunity before it disappears.",
+                    effects: {
+                        wealth: 14,
+                        materials: -8
+                    },
+                    flag: "tradeFocus"
+                },
+
+                {
+                    title: "Negotiate carefully",
+                    description:
+                        "Try to improve the terms before committing.",
+                    effects: {
+                        wealth: 7,
+                        morale: 2
+                    },
+                    flag: "tradeFocus"
+                },
+
+                {
+                    title: "Decline",
+                    description:
+                        "Avoid the uncertainty and keep your resources.",
+                    effects: {
+                        morale: 2
+                    }
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The New Mine",
+            description:
+                "Workers discover valuable minerals beneath the hills outside your settlement.",
+
+            choices: [
+
+                {
+                    title: "Open the mine",
+                    description:
+                        "Exploit the discovery and grow wealthy.",
+                    effects: {
+                        wealth: 15,
+                        materials: 8,
+                        morale: -7
+                    }
+                },
+
+                {
+                    title: "Limit the mining",
+                    description:
+                        "Take some of the opportunity without going too far.",
+                    effects: {
+                        wealth: 8,
+                        materials: 4,
+                        morale: -2
+                    }
+                },
+
+                {
+                    title: "Leave it untouched",
+                    description:
+                        "Preserve the land and your current way of life.",
+                    effects: {
+                        morale: 5
+                    }
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The Festival",
+            description:
+                "Your people have worked hard and want a celebration.",
+
+            choices: [
+
+                {
+                    title: "Hold a grand festival",
+                    description:
+                        "Give the entire settlement a celebration to remember.",
+                    effects: {
+                        morale: 14,
+                        wealth: -10,
+                        food: -5
+                    }
+                },
+
+                {
+                    title: "Hold a modest festival",
+                    description:
+                        "Celebrate without spending too much.",
+                    effects: {
+                        morale: 8,
+                        wealth: -4
+                    }
+                },
+
+                {
+                    title: "Cancel the festival",
+                    description:
+                        "Keep resources for more urgent needs.",
+                    effects: {
+                        wealth: 4,
+                        morale: -8
+                    }
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The Empty Granary",
+            description:
+                "Food reserves are falling faster than expected.",
+
+            choices: [
+
+                {
+                    title: "Ration food",
+                    description:
+                        "Protect the remaining supply by reducing consumption.",
+                    effects: {
+                        food: 8,
+                        morale: -8
+                    }
+                },
+
+                {
+                    title: "Buy food",
+                    description:
+                        "Spend wealth to bring supplies into the settlement.",
+                    effects: {
+                        food: 15,
+                        wealth: -12
+                    }
+                },
+
+                {
+                    title: "Use emergency stores",
+                    description:
+                        "Solve the immediate shortage using your reserves.",
+                    effects: {
+                        food: 10,
+                        materials: -6
+                    }
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The Builder's Proposal",
+            description:
+                "A master builder proposes a major public structure that could become a symbol of your civilization.",
+
+            choices: [
+
+                {
+                    title: "Build it",
+                    description:
+                        "Make the ambitious investment.",
+                    effects: {
+                        materials: -15,
+                        morale: 10,
+                        wealth: 6
+                    }
+                },
+
+                {
+                    title: "Build something smaller",
+                    description:
+                        "Create something useful without the full expense.",
+                    effects: {
+                        materials: -8,
+                        morale: 5,
+                        wealth: 3
+                    }
+                },
+
+                {
+                    title: "Reject the proposal",
+                    description:
+                        "Keep your materials for more immediate needs.",
+                    effects: {
+                        materials: 4
+                    }
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The Border Dispute",
+            description:
+                "A neighbouring settlement claims part of the land your people consider theirs.",
+
+            choices: [
+
+                {
+                    title: "Give them the land",
+                    description:
+                        "Avoid escalation by making a difficult concession.",
+                    effects: {
+                        materials: -8,
+                        morale: 4
+                    },
+                    flag: "cooperation"
+                },
+
+                {
+                    title: "Negotiate",
+                    description:
+                        "Try to find a compromise.",
+                    effects: {
+                        wealth: -3,
+                        morale: 5
+                    },
+                    flag: "cooperation"
+                },
+
+                {
+                    title: "Refuse",
+                    description:
+                        "Stand firmly behind your claim.",
+                    effects: {
+                        morale: -3,
+                        materials: 4
+                    },
+                    flag: "defense"
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The Strange Seeds",
+            description:
+                "Travellers bring unfamiliar seeds that could transform your agriculture — or fail completely.",
+
+            choices: [
+
+                {
+                    title: "Plant them everywhere",
+                    description:
+                        "Take the gamble and embrace the discovery.",
+                    effects: {
+                        food: 18,
+                        morale: 3
+                    },
+                    flag: "experimentation"
+                },
+
+                {
+                    title: "Test them first",
+                    description:
+                        "Experiment carefully before committing.",
+                    effects: {
+                        food: 7,
+                        materials: -3
+                    },
+                    flag: "experimentation"
+                },
+
+                {
+                    title: "Reject them",
+                    description:
+                        "Stick with crops you already understand.",
+                    effects: {
+                        food: 2
+                    }
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The Sick Season",
+            description:
+                "Illness is spreading through the settlement.",
+
+            choices: [
+
+                {
+                    title: "Close the markets",
+                    description:
+                        "Reduce contact and protect the population.",
+                    effects: {
+                        wealth: -10,
+                        population: 3
+                    }
+                },
+
+                {
+                    title: "Continue normally",
+                    description:
+                        "Keep the economy moving despite the risk.",
+                    effects: {
+                        wealth: 8,
+                        population: -7
+                    }
+                },
+
+                {
+                    title: "Fund public care",
+                    description:
+                        "Spend heavily to protect your people.",
+                    effects: {
+                        wealth: -12,
+                        population: 6,
+                        morale: 8
+                    }
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The Skilled Outsiders",
+            description:
+                "A group of skilled workers asks permission to settle in your civilization.",
+
+            choices: [
+
+                {
+                    title: "Welcome them",
+                    description:
+                        "Open your settlement to their knowledge and skills.",
+                    effects: {
+                        population: 8,
+                        materials: 7,
+                        morale: 4
+                    },
+                    flag: "growth"
+                },
+
+                {
+                    title: "Offer limited settlement",
+                    description:
+                        "Allow some of them to join while keeping growth controlled.",
+                    effects: {
+                        population: 4,
+                        materials: 4
+                    }
+                },
+
+                {
+                    title: "Turn them away",
+                    description:
+                        "Protect the stability of your existing population.",
+                    effects: {
+                        morale: -4
+                    }
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The Great Library",
+            description:
+                "Scholars ask for funding to build a place where knowledge can be collected and shared.",
+
+            choices: [
+
+                {
+                    title: "Fund the library",
+                    description:
+                        "Invest in knowledge that may benefit future generations.",
+                    effects: {
+                        wealth: -10,
+                        morale: 7,
+                        materials: -6
+                    },
+                    flag: "education"
+                },
+
+                {
+                    title: "Fund a small archive",
+                    description:
+                        "Preserve some knowledge without the full expense.",
+                    effects: {
+                        wealth: -5,
+                        morale: 4
+                    },
+                    flag: "education"
+                },
+
+                {
+                    title: "Refuse",
+                    description:
+                        "Keep your resources focused on immediate needs.",
+                    effects: {
+                        wealth: 3
+                    }
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The Broken Bridge",
+            description:
+                "A major bridge collapses, disrupting movement and trade.",
+
+            choices: [
+
+                {
+                    title: "Repair immediately",
+                    description:
+                        "Restore the connection before the disruption grows.",
+                    effects: {
+                        materials: -12,
+                        wealth: 8
+                    }
+                },
+
+                {
+                    title: "Build a cheaper replacement",
+                    description:
+                        "Accept a slower solution to conserve materials.",
+                    effects: {
+                        materials: -7,
+                        wealth: 3
+                    }
+                },
+
+                {
+                    title: "Reroute traffic",
+                    description:
+                        "Avoid the repair cost and accept temporary disruption.",
+                    effects: {
+                        wealth: -8,
+                        materials: 3
+                    }
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The Wealthy Merchant",
+            description:
+                "One merchant has become extraordinarily wealthy while the rest of the settlement struggles.",
+
+            choices: [
+
+                {
+                    title: "Tax the merchant",
+                    description:
+                        "Redistribute part of the wealth.",
+                    effects: {
+                        wealth: 8,
+                        morale: 5
+                    }
+                },
+
+                {
+                    title: "Reward the merchant",
+                    description:
+                        "Encourage further investment and commerce.",
+                    effects: {
+                        wealth: 12,
+                        morale: -3
+                    },
+                    flag: "tradeFocus"
+                },
+
+                {
+                    title: "Leave them alone",
+                    description:
+                        "Avoid interfering with private wealth.",
+                    effects: {
+                        morale: -2
+                    }
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The Drought",
+            description:
+                "Rain has disappeared and the fields are beginning to suffer.",
+
+            choices: [
+
+                {
+                    title: "Protect the farmland",
+                    description:
+                        "Spend materials to preserve your food production.",
+                    effects: {
+                        materials: -12,
+                        food: 10
+                    }
+                },
+
+                {
+                    title: "Buy food abroad",
+                    description:
+                        "Use wealth to secure supplies elsewhere.",
+                    effects: {
+                        wealth: -12,
+                        food: 15
+                    },
+                    flag: "tradeFocus"
+                },
+
+                {
+                    title: "Trust the rains",
+                    description:
+                        "Wait and hope the weather changes.",
+                    effects: {
+                        food: -15,
+                        wealth: 4
+                    }
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The Curious Children",
+            description:
+                "Young people in the settlement ask for places where they can learn.",
+
+            choices: [
+
+                {
+                    title: "Build schools",
+                    description:
+                        "Invest in education for the future.",
+                    effects: {
+                        wealth: -9,
+                        materials: -6,
+                        morale: 8
+                    },
+                    flag: "education"
+                },
+
+                {
+                    title: "Create apprenticeships",
+                    description:
+                        "Teach practical skills through work.",
+                    effects: {
+                        materials: 5,
+                        morale: 5
+                    },
+                    flag: "education"
+                },
+
+                {
+                    title: "Ignore the request",
+                    description:
+                        "Keep resources focused elsewhere.",
+                    effects: {
+                        wealth: 3,
+                        morale: -7
+                    }
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The Night Market",
+            description:
+                "Citizens want permission to create a market that stays open after sunset.",
+
+            choices: [
+
+                {
+                    title: "Allow it freely",
+                    description:
+                        "Let people experiment with a new form of commerce.",
+                    effects: {
+                        wealth: 10,
+                        morale: 7
+                    },
+                    flag: "tradeFocus"
+                },
+
+                {
+                    title: "Regulate it",
+                    description:
+                        "Allow the market with clear rules.",
+                    effects: {
+                        wealth: 6,
+                        morale: 4
+                    }
+                },
+
+                {
+                    title: "Ban it",
+                    description:
+                        "Keep the settlement predictable and controlled.",
+                    effects: {
+                        morale: -6,
+                        materials: 3
+                    },
+                    flag: "defense"
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The Great Opportunity",
+            description:
+                "A powerful neighbouring empire offers you a major trade agreement.",
+
+            choices: [
+
+                {
+                    title: "Accept immediately",
+                    description:
+                        "Take the enormous economic opportunity.",
+                    effects: {
+                        wealth: 18,
+                        morale: -3
+                    },
+                    flag: "tradeFocus"
+                },
+
+                {
+                    title: "Negotiate carefully",
+                    description:
+                        "Seek prosperity without giving away too much independence.",
+                    effects: {
+                        wealth: 9,
+                        morale: 2
+                    },
+                    flag: "tradeFocus"
+                },
+
+                {
+                    title: "Reject it",
+                    description:
+                        "Keep your independence and accept slower growth.",
+                    effects: {
+                        morale: 5
+                    },
+                    flag: "defense"
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The Storm",
+            description:
+                "A severe storm is approaching your settlement.",
+
+            choices: [
+
+                {
+                    title: "Evacuate vulnerable areas",
+                    description:
+                        "Protect people even if infrastructure is damaged.",
+                    effects: {
+                        materials: -8,
+                        population: 4
+                    }
+                },
+
+                {
+                    title: "Build defenses",
+                    description:
+                        "Spend heavily to protect the settlement itself.",
+                    effects: {
+                        materials: -15,
+                        population: 6,
+                        morale: 5
+                    },
+                    flag: "defense"
+                },
+
+                {
+                    title: "Do nothing",
+                    description:
+                        "Save your resources and accept the risk.",
+                    effects: {
+                        population: -12,
+                        materials: 5,
+                        morale: -8
+                    }
+                }
+
+            ]
+        },
+
+
+        {
+            title: "The People's Question",
+            description:
+                "Your citizens ask a simple question: What kind of civilization are we trying to become?",
+
+            choices: [
+
+                {
+                    title: "A prosperous civilization",
+                    description:
+                        "Choose economic opportunity and growth.",
+                    effects: {
+                        wealth: 7
+                    },
+                    flag: "tradeFocus"
+                },
+
+                {
+                    title: "A strong civilization",
+                    description:
+                        "Choose stability and protection.",
+                    effects: {
+                        materials: 7
+                    },
+                    flag: "defense"
+                },
+
+                {
+                    title: "A happy civilization",
+                    description:
+                        "Choose the wellbeing of your people.",
+                    effects: {
+                        morale: 10
+                    },
+                    flag: "cooperation"
+                }
+
+            ]
+        }
+
+    ];
+
+
+    function clamp(value) {
+
+        return Math.max(
+            0,
+            Math.min(100, Math.round(value))
+        );
+
+    }
 
 
     function updateStats() {
 
-        roundDisplay.textContent =
-            `${round} / ${TOTAL_ROUNDS}`;
+        Object.keys(state).forEach((key) => {
 
-        if (times.length === 0) {
-            lastTimeDisplay.textContent = "—";
-            bestTimeDisplay.textContent = "—";
-            averageTimeDisplay.textContent = "—";
-            return;
-        }
+            state[key] = clamp(state[key]);
 
-        const last =
-            times[times.length - 1];
+        });
 
-        const best =
-            Math.min(...times);
 
-        const average =
-            Math.round(
-                times.reduce(
-                    (sum, value) => sum + value,
-                    0
-                ) / times.length
-            );
+        const elements = {
 
-        lastTimeDisplay.textContent =
-            `${last} ms`;
+            population: [
+                document.getElementById("populationValue"),
+                document.getElementById("populationBar")
+            ],
 
-        bestTimeDisplay.textContent =
-            `${best} ms`;
+            food: [
+                document.getElementById("foodValue"),
+                document.getElementById("foodBar")
+            ],
 
-        averageTimeDisplay.textContent =
-            `${average} ms`;
+            materials: [
+                document.getElementById("materialsValue"),
+                document.getElementById("materialsBar")
+            ],
+
+            wealth: [
+                document.getElementById("wealthValue"),
+                document.getElementById("wealthBar")
+            ],
+
+            morale: [
+                document.getElementById("moraleValue"),
+                document.getElementById("moraleBar")
+            ]
+
+        };
+
+
+        Object.entries(elements).forEach(
+            ([key, [valueElement, barElement]]) => {
+
+                valueElement.textContent =
+                    state[key];
+
+                barElement.style.width =
+                    `${state[key]}%`;
+
+            }
+        );
+
+
+        document.getElementById(
+            "turnNumber"
+        ).textContent = turn;
+
     }
 
 
-    function resetGameArea() {
+    function addLog(message) {
 
-        gameArea.className = "game-area";
+        history.push(message);
 
-        gameMessage.textContent =
-            "Get ready...";
+        const log =
+            document.getElementById("logEntries");
+
+        const entry =
+            document.createElement("p");
+
+        entry.textContent =
+            `• ${message}`;
+
+        log.prepend(entry);
 
     }
 
 
-    function startRound() {
+    function getAvailableEvents() {
 
-        waitingForPulse = true;
+        return events.filter(
+            event =>
+                !history.includes(
+                    `EVENT:${event.title}`
+                )
+        );
 
-        gameArea.className =
-            "game-area waiting";
-
-        gameMessage.textContent =
-            "Wait for the pulse...";
+    }
 
 
-        const delay =
+    function selectEvent() {
+
+        const available =
+            getAvailableEvents();
+
+        return available[
             Math.floor(
-                Math.random() * 2500
-            ) + 1500;
+                Math.random() *
+                available.length
+            )
+        ];
 
-
-        pulseTimeout = setTimeout(() => {
-
-            if (!gameRunning) {
-                return;
-            }
-
-            waitingForPulse = false;
-
-            gameArea.className =
-                "game-area ready";
-
-            gameMessage.textContent =
-                "CLICK!";
-
-            pulseStartTime =
-                performance.now();
-
-        }, delay);
     }
 
 
-    function startGame() {
+    function renderEvent() {
 
-        clearTimeout(pulseTimeout);
+        const event =
+            selectEvent();
 
-        round = 0;
-        times = [];
+        if (!event) {
+            endGame();
+            return;
+        }
 
-        gameRunning = true;
 
-        startButton.textContent =
-            "Restart Game";
+        history.push(
+            `EVENT:${event.title}`
+        );
+
+
+        document.getElementById(
+            "eventTitle"
+        ).textContent =
+            event.title;
+
+
+        document.getElementById(
+            "eventDescription"
+        ).textContent =
+            event.description;
+
+
+        const choicesContainer =
+            document.getElementById("choices");
+
+        choicesContainer.innerHTML = "";
+
+
+        event.choices.forEach(
+            (choice, index) => {
+
+                const button =
+                    document.createElement("button");
+
+                button.type = "button";
+
+                button.className =
+                    "choice-button";
+
+
+                button.innerHTML = `
+                    <span class="choice-number">
+                        CHOICE ${index + 1}
+                    </span>
+
+                    <span class="choice-title">
+                        ${choice.title}
+                    </span>
+
+                    <span class="choice-description">
+                        ${choice.description}
+                    </span>
+                `;
+
+
+                button.addEventListener(
+                    "click",
+                    () => chooseOption(
+                        event,
+                        choice
+                    )
+                );
+
+
+                choicesContainer.appendChild(
+                    button
+                );
+
+            }
+        );
+
+    }
+
+
+    function chooseOption(event, choice) {
+
+        Object.entries(
+            choice.effects
+        ).forEach(
+            ([key, value]) => {
+
+                state[key] += value;
+
+            }
+        );
+
+
+        if (choice.flag) {
+
+            flags[choice.flag]++;
+
+        }
+
+
+        const resultText =
+            describeChoice(
+                event,
+                choice
+            );
+
+
+        addLog(resultText);
+
+
+        applyNaturalChanges();
+
 
         updateStats();
 
-        startRound();
+
+        document.querySelectorAll(
+            ".choice-button"
+        ).forEach(
+            button => {
+                button.disabled = true;
+                button.style.opacity = "0.5";
+                button.style.cursor = "default";
+            }
+        );
+
+
+        if (turn >= TOTAL_TURNS) {
+
+            setTimeout(
+                endGame,
+                700
+            );
+
+            return;
+
+        }
+
+
+        turn++;
+
+
+        setTimeout(
+            renderEvent,
+            700
+        );
+
     }
 
 
-    function finishGame() {
+    function describeChoice(event, choice) {
 
-        gameRunning = false;
-        waitingForPulse = false;
+        return `You chose to ${choice.title.toLowerCase()}.`;
 
-        clearTimeout(pulseTimeout);
-
-        gameArea.className =
-            "game-area ready";
-
-        const best =
-            Math.min(...times);
-
-        const average =
-            Math.round(
-                times.reduce(
-                    (sum, value) => sum + value,
-                    0
-                ) / times.length
-            );
-
-        gameMessage.textContent =
-            `Complete! Best: ${best} ms • Average: ${average} ms`;
-
-        startButton.textContent =
-            "Play Again";
     }
 
 
-    function handleGameAreaClick() {
+    function applyNaturalChanges() {
 
-        if (!gameRunning) {
-            return;
+        /*
+         * Food is consumed based on population.
+         * Larger civilizations require more food.
+         */
+
+        const foodCost =
+            state.population >= 75
+                ? 7
+                : state.population >= 55
+                    ? 5
+                    : 3;
+
+
+        state.food -= foodCost;
+
+
+        /*
+         * Healthy food supplies and morale
+         * encourage gradual population growth.
+         */
+
+        if (
+            state.food >= 65 &&
+            state.morale >= 60
+        ) {
+
+            state.population += 2;
+
         }
 
 
-        if (waitingForPulse) {
+        /*
+         * Very low food creates pressure.
+         */
 
-            clearTimeout(pulseTimeout);
+        if (state.food <= 20) {
 
-            gameArea.className =
-                "game-area too-early";
+            state.population -= 3;
+            state.morale -= 4;
 
-            gameMessage.textContent =
-                "Too early! Wait for the pulse.";
-
-            waitingForPulse = false;
-
-            setTimeout(() => {
-
-                if (gameRunning) {
-                    startRound();
-                }
-
-            }, 1000);
-
-            return;
         }
 
 
-        if (pulseStartTime === null) {
-            return;
+        /*
+         * Extremely low morale creates
+         * gradual population decline.
+         */
+
+        if (state.morale <= 20) {
+
+            state.population -= 2;
+
+        }
+
+    }
+
+
+    function calculateEnding() {
+
+        const averages = {
+
+            prosperity:
+                (state.wealth + state.food) / 2,
+
+            stability:
+                (state.materials + state.morale) / 2,
+
+            wellbeing:
+                (state.food + state.morale) / 2,
+
+            growth:
+                (state.population + state.wealth) / 2,
+
+            adaptability:
+                (
+                    flags.experimentation +
+                    flags.cooperation +
+                    flags.tradeFocus
+                )
+
+        };
+
+
+        let title =
+            "THE FRAGILE KINGDOM";
+
+        let trait =
+            "RESILIENCE";
+
+        let story =
+            "Your civilization survived an uncertain era. It was not defined by one overwhelming strength, but by its ability to continue despite difficult choices.";
+
+
+        if (
+            averages.prosperity >= 70 &&
+            state.wealth >= 70
+        ) {
+
+            title =
+                "THE MERCHANT REALM";
+
+            trait =
+                "AMBITION";
+
+            story =
+                "Your civilization grew through commerce, opportunity and calculated risk. Prosperity became the foundation of your era.";
+
         }
 
 
-        const reactionTime =
-            Math.round(
-                performance.now() -
-                pulseStartTime
-            );
+        else if (
+            averages.wellbeing >= 70 &&
+            state.morale >= 70
+        ) {
+
+            title =
+                "THE GARDEN";
+
+            trait =
+                "CARE";
+
+            story =
+                "Your civilization repeatedly invested in the wellbeing of its people. Prosperity mattered, but a good life mattered more.";
+
+        }
 
 
-        times.push(reactionTime);
+        else if (
+            state.materials >= 70 &&
+            state.morale >= 55
+        ) {
 
-        round++;
+            title =
+                "THE FORTRESS";
 
-        pulseStartTime = null;
+            trait =
+                "RESOLVE";
+
+            story =
+                "Your civilization valued preparation, infrastructure and protection. When uncertainty arrived, you preferred to be ready.";
+
+        }
+
+
+        else if (
+            state.population >= 70 &&
+            flags.growth >= 2
+        ) {
+
+            title =
+                "THE FRONTIER";
+
+            trait =
+                "CURIOSITY";
+
+            story =
+                "Your civilization embraced growth and new possibilities. You repeatedly chose expansion, experimentation and opportunity.";
+
+        }
+
+
+        else if (
+            flags.cooperation >= 3
+        ) {
+
+            title =
+                "THE PEOPLE'S REALM";
+
+            trait =
+                "COOPERATION";
+
+            story =
+                "Your civilization was shaped by decisions that considered the lives of others. Cooperation became one of your greatest strengths.";
+
+        }
+
+
+        else if (
+            Math.min(
+                state.population,
+                state.food,
+                state.materials,
+                state.wealth,
+                state.morale
+            ) <= 20
+        ) {
+
+            title =
+                "THE SURVIVOR";
+
+            trait =
+                "ENDURANCE";
+
+            story =
+                "Your civilization faced serious hardship but endured. It may not have been the wealthiest or strongest realm, but it survived.";
+
+        }
+
+
+        return {
+            title,
+            trait,
+            story
+        };
+
+    }
+
+
+    function endGame() {
+
+        document.querySelector(
+            ".event-panel"
+        ).hidden = true;
+
+
+        document.querySelector(
+            ".civilization-log"
+        ).hidden = true;
+
+
+        const ending =
+            calculateEnding();
+
+
+        document.getElementById(
+            "endingTitle"
+        ).textContent =
+            ending.title;
+
+
+        document.getElementById(
+            "endingSubtitle"
+        ).textContent =
+            "Your twelve-turn era has come to an end.";
+
+
+        document.getElementById(
+            "finalPopulation"
+        ).textContent =
+            state.population;
+
+
+        document.getElementById(
+            "finalFood"
+        ).textContent =
+            state.food;
+
+
+        document.getElementById(
+            "finalMaterials"
+        ).textContent =
+            state.materials;
+
+
+        document.getElementById(
+            "finalWealth"
+        ).textContent =
+            state.wealth;
+
+
+        document.getElementById(
+            "finalMorale"
+        ).textContent =
+            state.morale;
+
+
+        document.getElementById(
+            "finalStory"
+        ).textContent =
+            ending.story;
+
+
+        document.getElementById(
+            "definingTrait"
+        ).textContent =
+            ending.trait;
+
+
+        document.getElementById(
+            "endScreen"
+        ).hidden = false;
+
+    }
+
+
+    function resetGame() {
+
+        state = {
+
+            population: 50,
+            food: 50,
+            materials: 50,
+            wealth: 50,
+            morale: 50
+
+        };
+
+
+        turn = 1;
+
+        history = [];
+
+
+        flags = {
+
+            tradeFocus: 0,
+            education: 0,
+            cooperation: 0,
+            experimentation: 0,
+            defense: 0,
+            growth: 0
+
+        };
+
+
+        document.querySelector(
+            ".event-panel"
+        ).hidden = false;
+
+
+        document.querySelector(
+            ".civilization-log"
+        ).hidden = false;
+
+
+        document.getElementById(
+            "endScreen"
+        ).hidden = true;
+
+
+        document.getElementById(
+            "logEntries"
+        ).innerHTML =
+            "<p>Your civilization begins its first era.</p>";
+
 
         updateStats();
 
+        renderEvent();
 
-        if (round >= TOTAL_ROUNDS) {
-
-            finishGame();
-            return;
-
-        }
-
-
-        gameArea.className =
-            "game-area";
-
-        gameMessage.textContent =
-            `${reactionTime} ms — Next round...`;
-
-
-        setTimeout(() => {
-
-            if (gameRunning) {
-                startRound();
-            }
-
-        }, 900);
     }
 
 
-    startButton.addEventListener(
+    document.getElementById(
+        "playAgainButton"
+    ).addEventListener(
         "click",
-        startGame
-    );
-
-    gameArea.addEventListener(
-        "click",
-        handleGameAreaClick
+        resetGame
     );
 
 
     updateStats();
+
+    renderEvent();
 
 });
