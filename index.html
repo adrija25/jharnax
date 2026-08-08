@@ -18,6 +18,7 @@
 <body>
 
     <header class="site-header">
+
         <nav class="navbar">
 
             <a href="index.html" class="brand">
@@ -30,6 +31,7 @@
             </div>
 
         </nav>
+
     </header>
 
 
@@ -66,6 +68,7 @@
             <div class="section-heading">
 
                 <div>
+
                     <h2 class="section-title">
                         Discover Games
                     </h2>
@@ -73,23 +76,30 @@
                     <p class="section-description">
                         Explore games created inside the Jharnax realm.
                     </p>
+
                 </div>
 
+
                 <div class="game-search">
+
                     <input
                         type="search"
                         id="gameSearch"
                         placeholder="Search games..."
                         aria-label="Search games"
                     >
+
                 </div>
 
             </div>
 
 
-            <!-- CATEGORY FILTERS -->
+            <!-- FILTERS -->
 
-            <div class="category-filters" id="categoryFilters">
+            <div
+                class="category-filters"
+                id="categoryFilters"
+            >
 
                 <button
                     class="filter-button active"
@@ -139,18 +149,31 @@
                     Casual
                 </button>
 
+                <button
+                    class="filter-button"
+                    data-category="reaction"
+                    type="button"
+                >
+                    Reaction
+                </button>
+
             </div>
 
 
-            <!-- GAME GRID -->
+            <!-- GAME CARDS -->
 
-            <div class="game-grid" id="gameGrid">
+            <div
+                class="game-grid"
+                id="gameGrid"
+            >
 
+
+                <!-- PULSE SHIFT -->
 
                 <article
                     class="game-card"
-                    data-category="puzzle"
-                    data-name="Puzzle Game"
+                    data-category="reaction"
+                    data-name="Pulse Shift"
                 >
 
                     <div class="game-card-visual">
@@ -160,29 +183,30 @@
                     <div class="game-card-content">
 
                         <div class="game-category">
-                            PUZZLE
+                            REACTION
                         </div>
 
                         <h3>
-                            Coming Soon
+                            Pulse Shift
                         </h3>
 
                         <p>
-                            An original Jharnax puzzle experience.
+                            Test your reaction speed across five rapid rounds.
                         </p>
 
-                        <button
+                        <a
                             class="game-button"
-                            type="button"
-                            disabled
+                            href="games/pulse-shift/index.html"
                         >
-                            Coming Soon
-                        </button>
+                            Play Now
+                        </a>
 
                     </div>
 
                 </article>
 
+
+                <!-- PLACEHOLDER -->
 
                 <article
                     class="game-card"
@@ -221,6 +245,8 @@
                 </article>
 
 
+                <!-- PLACEHOLDER -->
+
                 <article
                     class="game-card"
                     data-category="brain"
@@ -257,6 +283,8 @@
 
                 </article>
 
+
+                <!-- PLACEHOLDER -->
 
                 <article
                     class="game-card"
@@ -295,6 +323,8 @@
                 </article>
 
 
+                <!-- PLACEHOLDER -->
+
                 <article
                     class="game-card"
                     data-category="casual"
@@ -332,6 +362,8 @@
                 </article>
 
 
+                <!-- PLACEHOLDER -->
+
                 <article
                     class="game-card"
                     data-category="puzzle"
@@ -368,6 +400,7 @@
 
                 </article>
 
+
             </div>
 
 
@@ -384,7 +417,10 @@
 
         <!-- CATEGORIES -->
 
-        <section class="section categories-section" id="categories">
+        <section
+            class="section categories-section"
+            id="categories"
+        >
 
             <h2 class="section-title">
                 Explore Jharnax
@@ -401,11 +437,14 @@
     </main>
 
 
+    <!-- FOOTER -->
+
     <footer class="site-footer">
 
         <div class="footer-inner">
 
             <div>
+
                 <div class="brand">
                     JHARN<span>AX</span>
                 </div>
@@ -413,6 +452,7 @@
                 <p>
                     A gaming realm of Addyverse.
                 </p>
+
             </div>
 
             <div class="footer-copy">
