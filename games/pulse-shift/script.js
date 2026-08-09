@@ -41,6 +41,22 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
 
+    let personalityScores = {
+
+        diplomat: 0,
+        guardian: 0,
+        commander: 0,
+        visionary: 0,
+        humanist: 0,
+        strategist: 0,
+        rebel: 0,
+        scholar: 0,
+        builder: 0,
+        survivor: 0
+
+    };
+
+
 
     const events = [
 
@@ -1861,10 +1877,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+    function scorePersonality(choice) {
+
+        const text = `${choice.title || ""} ${choice.description || ""} ${choice.log || ""}`.toLowerCase();
+
+        const add = (personality, amount = 1) => {
+            personalityScores[personality] += amount;
+        };
+
+        if (text.includes("negotiate") || text.includes("fair price") || text.includes("compromise") || text.includes("agreement") || text.includes("neighbour") || text.includes("settlement")) add("diplomat", 3);
+        if (text.includes("protect") || text.includes("preserve") || text.includes("public care") || text.includes("evacuate") || text.includes("people") || text.includes("population")) add("guardian", 3);
+        if (text.includes("defense") || text.includes("defences") || text.includes("defend") || text.includes("refuse") || text.includes("stand firmly") || text.includes("ban it")) add("commander", 3);
+        if (text.includes("opportunity") || text.includes("everywhere") || text.includes("embrace") || text.includes("growth") || text.includes("transform") || text.includes("freely") || text.includes("ambitious")) add("visionary", 3);
+        if (text.includes("people") || text.includes("children") || text.includes("festival") || text.includes("wellbeing") || text.includes("care") || text.includes("share")) add("humanist", 3);
+        if (text.includes("carefully") || text.includes("limited") || text.includes("modest") || text.includes("regulate") || text.includes("ration") || text.includes("reserves") || text.includes("smaller")) add("strategist", 3);
+        if (text.includes("reject") || text.includes("decline") || text.includes("ignore") || text.includes("independence") || text.includes("untouched") || text.includes("ban")) add("rebel", 3);
+        if (text.includes("school") || text.includes("education") || text.includes("apprentice") || text.includes("library") || text.includes("archive") || text.includes("test them") || text.includes("knowledge")) add("scholar", 4);
+        if (text.includes("build") || text.includes("building") || text.includes("bridge") || text.includes("infrastructure") || text.includes("mine") || text.includes("structure")) add("builder", 3);
+        if (text.includes("emergency") || text.includes("survive") || text.includes("scarcity") || text.includes("wait") || text.includes("reserves") || text.includes("shortage") || text.includes("ration")) add("survivor", 3);
+
+        if (choice.flag === "cooperation") add("diplomat", 2);
+        if (choice.flag === "cooperation") add("humanist", 1);
+        if (choice.flag === "defense") add("guardian", 2);
+        if (choice.flag === "defense") add("commander", 2);
+        if (choice.flag === "growth") add("builder", 1);
+        if (choice.flag === "growth") add("visionary", 2);
+        if (choice.flag === "experimentation") add("visionary", 2);
+        if (choice.flag === "experimentation") add("scholar", 1);
+        if (choice.flag === "education") add("scholar", 4);
+        if (choice.flag === "tradeFocus") add("strategist", 2);
+        if (choice.flag === "tradeFocus") add("visionary", 1);
+    }
+
+
     function chooseOption(
         event,
         choice
     ) {
+
+        scorePersonality(choice);
+
+
+        history.push({
+            title: choice.title,
+            description: choice.description,
+            log: choice.log,
+            flag: choice.flag || null
+        });
+
 
         Object.entries(
             choice.effects
@@ -2014,737 +2074,102 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function calculateEnding() {
 
-        /*
-         * Tiny Empire does not judge the player by one resource alone.
-         *
-         * The final identity of a civilization is determined by:
-         *
-         * 1. Its final condition
-         * 2. The choices the player repeatedly made
-         * 3. The balance between different priorities
-         *
-         * This makes the ending feel earned rather than random.
-         */
-
-
-        const scores = {
-
-
-            ambition:
-
-                (state.wealth * 0.6) +
-
-                (flags.tradeFocus * 12) +
-
-                (flags.growth * 8),
-
-
-            care:
-
-                (state.morale * 0.55) +
-
-                (state.food * 0.35) +
-
-                (flags.cooperation * 14),
-
-
-            resolve:
-
-                (state.materials * 0.5) +
-
-                (state.morale * 0.25) +
-
-                (flags.defense * 14),
-
-
-            curiosity:
-
-                (state.population * 0.45) +
-
-                (state.food * 0.2) +
-
-                (flags.experimentation * 16) +
-
-                (flags.growth * 10),
-
-
-            wisdom:
-
-                (state.morale * 0.3) +
-
-                (state.materials * 0.2) +
-
-                (flags.education * 18) +
-
-                (flags.experimentation * 7),
-
-
-            cooperation:
-
-                (state.morale * 0.45) +
-
-                (state.population * 0.2) +
-
-                (flags.cooperation * 18),
-
-
-            adaptability:
-
-                (flags.experimentation * 18) +
-
-                (flags.cooperation * 8) +
-
-                (flags.tradeFocus * 7),
-
-
-            endurance:
-
-                Math.min(
-                    state.population,
-                    state.food,
-                    state.materials,
-                    state.wealth,
-                    state.morale
-                ) * 0.7
-
-        };
-
-
-        /*
-         * A civilization with a dangerously low final resource
-         * should be recognized for survival before prosperity.
-         */
-
-
-        const weakestResource =
-            Math.min(
-                state.population,
-                state.food,
-                state.materials,
-                state.wealth,
-                state.morale
-            );
-
-
-        if (
-            weakestResource <= 15
-        ) {
-
-            return {
-
-                title:
-                    "THE SURVIVOR",
-
-                trait:
-                    "ENDURANCE",
-
-                story:
-                    "Your civilization faced serious hardship and carried its people through an era of scarcity. It was not defined by abundance, but by the ability to endure when resources ran dangerously low.",
-
-                subtitle:
-                    "Your twelve-turn era ended under pressure — but your civilization endured."
-
-            };
-
-        }
-
-
-        /*
-         * A civilization that maintained strong values across
-         * all resources can receive a balance ending.
-         */
-
-
-        const resourceValues = [
-
+        const finalState = [
             state.population,
-
             state.food,
-
             state.materials,
-
             state.wealth,
-
             state.morale
-
         ];
 
-
-        const highest =
-            Math.max(
-                ...resourceValues
-            );
-
-
-        const lowest =
-            Math.min(
-                ...resourceValues
-            );
-
-
-        const balanceGap =
-            highest - lowest;
-
-
-        if (
-            balanceGap <= 18 &&
-            lowest >= 55
-        ) {
-
-            return {
-
-                title:
-                    "THE HARMONIOUS REALM",
-
-                trait:
-                    "BALANCE",
-
-                story:
-                    "Your civilization avoided becoming dependent on a single strength. Food, people, resources, wealth and morale remained remarkably aligned, creating a stable and resilient society.",
-
-                subtitle:
-                    "Your twelve-turn era produced a civilization defined by balance."
-
-            };
-
-        }
-
-
-        /*
-         * Education becomes a genuine ending rather than merely
-         * being a tracked flag that never affects the result.
-         */
-
-
-        if (
-            flags.education >= 2 &&
-            state.morale >= 55
-        ) {
-
-            return {
-
-                title:
-                    "THE SCHOLAR'S REALM",
-
-                trait:
-                    "WISDOM",
-
-                story:
-                    "Your civilization invested in knowledge even when more immediate opportunities competed for attention. Learning became part of the foundation on which your society was built.",
-
-                subtitle:
-                    "Your twelve-turn era became an era of learning and knowledge."
-
-            };
-
-        }
-
-
-        if (
-            flags.experimentation >= 2 &&
-            (
-                flags.cooperation +
-                flags.tradeFocus
-            ) >= 2
-        ) {
-
-            return {
-
-                title:
-                    "THE ADAPTIVE REALM",
-
-                trait:
-                    "ADAPTABILITY",
-
-                story:
-                    "Your civilization repeatedly experimented, adjusted and remained open to unfamiliar possibilities. Rather than relying on one fixed path, you learned to change with circumstances.",
-
-                subtitle:
-                    "Your twelve-turn era rewarded curiosity and adaptation."
-
-            };
-
-        }
-
-
-        if (
-            scores.ambition >= 78 &&
-            state.wealth >= 65
-        ) {
-
-            return {
-
-                title:
-                    "THE MERCHANT REALM",
-
-                trait:
-                    "AMBITION",
-
-                story:
-                    "Your civilization grew through commerce, opportunity and calculated risk. Prosperity became one of the strongest foundations of your era.",
-
-                subtitle:
-                    "Your twelve-turn era became an age of prosperity."
-
-            };
-
-        }
-
-
-        if (
-            scores.care >= 78 &&
-            state.morale >= 65
-        ) {
-
-            return {
-
-                title:
-                    "THE GARDEN",
-
-                trait:
-                    "CARE",
-
-                story:
-                    "Your civilization repeatedly invested in the wellbeing of its people. Prosperity mattered, but creating a good life for those who lived within your realm mattered more.",
-
-                subtitle:
-                    "Your twelve-turn era became an age of collective wellbeing."
-
-            };
-
-        }
-
-
-        if (
-            scores.resolve >= 78 &&
-            state.materials >= 65
-        ) {
-
-            return {
-
-                title:
-                    "THE FORTRESS",
-
-                trait:
-                    "RESOLVE",
-
-                story:
-                    "Your civilization valued preparation, infrastructure and protection. When uncertainty arrived, you preferred to build foundations strong enough to withstand it.",
-
-                subtitle:
-                    "Your twelve-turn era became an age of strength and preparation."
-
-            };
-
-        }
-
-
-        if (
-            scores.curiosity >= 78 &&
-            (
-                state.population >= 60 ||
-                flags.growth >= 2
-            )
-        ) {
-
-            return {
-
-                title:
-                    "THE FRONTIER",
-
-                trait:
-                    "CURIOSITY",
-
-                story:
-                    "Your civilization embraced growth and new possibilities. You repeatedly chose expansion, experimentation and opportunity instead of remaining within familiar boundaries.",
-
-                subtitle:
-                    "Your twelve-turn era became an age of discovery."
-
-            };
-
-        }
-
-
-        if (
-            scores.cooperation >= 78 &&
-            flags.cooperation >= 2
-        ) {
-
-            return {
-
-                title:
-                    "THE PEOPLE'S REALM",
-
-                trait:
-                    "COOPERATION",
-
-                story:
-                    "Your civilization was shaped by decisions that considered the lives of others. Cooperation became one of your greatest strengths and helped hold your society together.",
-
-                subtitle:
-                    "Your twelve-turn era became an age of community."
-
-            };
-
-        }
-
-
-        /*
-         * If no single identity dominates, use the strongest
-         * overall tendency so ordinary playthroughs still
-         * receive a meaningful result.
-         */
-
-
-        const ranked = [
-
-            [
-                "AMBITION",
-                scores.ambition
-            ],
-
-            [
-                "CARE",
-                scores.care
-            ],
-
-            [
-                "RESOLVE",
-                scores.resolve
-            ],
-
-            [
-                "CURIOSITY",
-                scores.curiosity
-            ],
-
-            [
-                "WISDOM",
-                scores.wisdom
-            ],
-
-            [
-                "COOPERATION",
-                scores.cooperation
-            ],
-
-            [
-                "ADAPTABILITY",
-                scores.adaptability
-            ]
-
-        ].sort(
-            (a, b) =>
-                b[1] - a[1]
-        );
-
-
-        const dominantTrait =
-            ranked[0][0];
-
-
-        const fallbackEndings = {
-
-
-            AMBITION: {
-
-                title:
-                    "THE RISING REALM",
-
-                trait:
-                    "AMBITION",
-
-                story:
-                    "Your civilization consistently looked toward opportunity and growth. It may not have become an economic powerhouse, but ambition shaped the direction of your era.",
-
-                subtitle:
-                    "Your twelve-turn era was driven by ambition."
-
-            },
-
-
-            CARE: {
-
-                title:
-                    "THE KINDER REALM",
-
-                trait:
-                    "CARE",
-
-                story:
-                    "Your civilization placed unusual value on the wellbeing of its people. Its greatest achievement was not wealth, but the quality of life it tried to create.",
-
-                subtitle:
-                    "Your twelve-turn era was shaped by care."
-
-            },
-
-
-            RESOLVE: {
-
-                title:
-                    "THE STEADFAST REALM",
-
-                trait:
-                    "RESOLVE",
-
-                story:
-                    "Your civilization preferred preparation and stability over reckless expansion. You built carefully and tried to make your society capable of weathering uncertainty.",
-
-                subtitle:
-                    "Your twelve-turn era was shaped by resolve."
-
-            },
-
-
-            CURIOSITY: {
-
-                title:
-                    "THE EXPLORERS' REALM",
-
-                trait:
-                    "CURIOSITY",
-
-                story:
-                    "Your civilization was rarely satisfied with the familiar. Your choices repeatedly opened the door to growth, experimentation and new possibilities.",
-
-                subtitle:
-                    "Your twelve-turn era was shaped by curiosity."
-
-            },
-
-
-            WISDOM: {
-
-                title:
-                    "THE LEARNING REALM",
-
-                trait:
-                    "WISDOM",
-
-                story:
-                    "Your civilization understood that not every investment produces an immediate reward. Knowledge, learning and thoughtful decisions became part of its identity.",
-
-                subtitle:
-                    "Your twelve-turn era was shaped by wisdom."
-
-            },
-
-
-            COOPERATION: {
-
-                title:
-                    "THE UNITED REALM",
-
-                trait:
-                    "COOPERATION",
-
-                story:
-                    "Your civilization repeatedly considered how its decisions affected others. Unity and cooperation became quiet strengths throughout your era.",
-
-                subtitle:
-                    "Your twelve-turn era was shaped by cooperation."
-
-            },
-
-
-            ADAPTABILITY: {
-
-                title:
-                    "THE CHANGING REALM",
-
-                trait:
-                    "ADAPTABILITY",
-
-                story:
-                    "Your civilization did not follow one rigid path. It adapted to circumstances, experimented with possibilities and changed course when necessary.",
-
-                subtitle:
-                    "Your twelve-turn era was shaped by adaptability."
-
-            }
-
+        const weakestResource = Math.min(...finalState);
+        const scores = { ...personalityScores };
+
+        if (weakestResource <= 20) scores.survivor += 8;
+        if (weakestResource <= 10) scores.survivor += 6;
+        if (state.population >= 70) scores.guardian += 3;
+        if (state.morale >= 70) scores.humanist += 4;
+        if (state.materials >= 70) scores.builder += 4;
+        if (state.wealth >= 70) scores.strategist += 4;
+        if (state.food >= 70) scores.guardian += 3;
+        if (flags.education >= 2) scores.scholar += 5;
+        if (flags.experimentation >= 2) scores.visionary += 4;
+        if (flags.cooperation >= 2) scores.diplomat += 4;
+        if (flags.defense >= 2) scores.commander += 4;
+        if (flags.growth >= 2) scores.builder += 3;
+        if (flags.tradeFocus >= 2) scores.strategist += 3;
+
+        const priority = [
+            "diplomat", "guardian", "commander", "visionary", "humanist",
+            "strategist", "rebel", "scholar", "builder", "survivor"
+        ];
+
+        let winningPersonality = priority[0];
+        priority.forEach(personality => {
+            if (scores[personality] > scores[winningPersonality]) winningPersonality = personality;
+        });
+
+        const profiles = {
+            diplomat: { title: "THE DIPLOMAT", trait: "DIPLOMAT", image: "images/diplomat.png", subtitle: "You shaped your civilization through cooperation, negotiation and careful relationships.", story: "You rarely saw every problem as a battle to be won. You looked for agreements, compromises and ways to keep relationships intact. Your civilization's strength came from knowing when listening could accomplish more than force.", insight: "You tend to look for the path that allows different interests to coexist." },
+            guardian: { title: "THE GUARDIAN", trait: "GUARDIAN", image: "images/guardian.png", subtitle: "You built your civilization around protection, stability and the wellbeing of your people.", story: "When uncertainty appeared, your instinct was to protect what mattered. You were willing to sacrifice wealth or opportunity when the safety of your people was at stake.", insight: "You naturally think about what needs protecting before asking what can be gained." },
+            commander: { title: "THE COMMANDER", trait: "COMMANDER", image: "images/commander.png", subtitle: "You made decisive choices and were willing to stand firmly behind them.", story: "Your civilization was shaped by decisiveness. You did not always choose the safest or most popular path, but you were willing to take responsibility and act when hesitation carried its own risks.", insight: "You are comfortable making difficult decisions when someone has to take the lead." },
+            visionary: { title: "THE VISIONARY", trait: "VISIONARY", image: "images/visionary.png", subtitle: "You repeatedly chose possibility over certainty.", story: "You were drawn toward opportunities that could change the future of your civilization. You were willing to experiment, expand and invest in possibilities that had not yet proven themselves.", insight: "You tend to see what something could become rather than only what it is today." },
+            humanist: { title: "THE HUMANIST", trait: "HUMANIST", image: "images/humanist.png", subtitle: "You measured success by the lives of the people inside your civilization.", story: "Again and again, your choices returned to people: their wellbeing, morale, opportunities and quality of life. Your civilization may not have maximised every resource, but you refused to treat its people as merely numbers.", insight: "You instinctively ask how decisions affect the human beings living with them." },
+            strategist: { title: "THE STRATEGIST", trait: "STRATEGIST", image: "images/strategist.png", subtitle: "You preferred calculated decisions over impulsive ones.", story: "You consistently weighed costs, risks and alternatives before committing. You understood that a good decision is not always the biggest decision — sometimes it is the one that preserves options for later.", insight: "You naturally think several moves ahead." },
+            rebel: { title: "THE REBEL", trait: "REBEL", image: "images/rebel.png", subtitle: "You were willing to question expectations and reject paths that did not feel right.", story: "Your civilization was not built by simply following the obvious path. You questioned proposals, resisted pressure and sometimes chose independence over cooperation.", insight: "You value autonomy and are willing to challenge the direction everyone else expects." },
+            scholar: { title: "THE SCHOLAR", trait: "SCHOLAR", image: "images/scholar.png", subtitle: "You believed knowledge could be one of the greatest foundations of civilization.", story: "You repeatedly invested in learning, education and understanding. You accepted that some of the most important investments may not produce immediate rewards.", insight: "You are drawn toward understanding how things work before deciding what should be done." },
+            builder: { title: "THE BUILDER", trait: "BUILDER", image: "images/builder.png", subtitle: "You turned resources into structures, systems and lasting foundations.", story: "Your choices repeatedly favoured creating something tangible. Buildings, infrastructure and practical foundations mattered because you understood that civilizations need things that endure beyond a single decision.", insight: "You naturally turn ideas into systems, structures and things that can last." },
+            survivor: { title: "THE SURVIVOR", trait: "SURVIVOR", image: "images/survivor.png", subtitle: "You kept your civilization alive when circumstances became difficult.", story: "Your choices reveal a strong instinct for endurance. When resources became scarce or circumstances deteriorated, you focused on getting through the immediate danger and preserving what remained.", insight: "You know how to keep going when the ideal solution is no longer available." }
         };
 
-
-        return (
-
-            fallbackEndings[
-                dominantTrait
-            ]
-
-            ||
-
-            {
-
-                title:
-                    "THE FRAGILE KINGDOM",
-
-                trait:
-                    "RESILIENCE",
-
-                story:
-                    "Your civilization survived an uncertain era. It was not defined by one overwhelming strength, but by its ability to continue despite difficult choices.",
-
-                subtitle:
-                    "Your twelve-turn era has come to an end."
-
-            }
-
-        );
-
+        return { ...profiles[winningPersonality], scores };
     }
-
 
 
     function endGame() {
 
-        document.querySelector(
-            ".event-panel"
-        ).hidden = true;
+        document.querySelector(".event-panel").hidden = true;
+        document.querySelector(".civilization-log").hidden = true;
 
+        const ending = calculateEnding();
 
-        document.querySelector(
-            ".civilization-log"
-        ).hidden = true;
+        document.getElementById("endingTitle").textContent = ending.title;
+        document.getElementById("endingSubtitle").textContent = ending.subtitle;
+        document.getElementById("finalPopulation").textContent = state.population;
+        document.getElementById("finalFood").textContent = state.food;
+        document.getElementById("finalMaterials").textContent = state.materials;
+        document.getElementById("finalWealth").textContent = state.wealth;
+        document.getElementById("finalMorale").textContent = state.morale;
+        document.getElementById("finalStory").textContent = ending.story;
+        document.getElementById("definingTrait").textContent = ending.trait;
 
-
-        const ending =
-            calculateEnding();
-
-
-        document.getElementById(
-            "endingTitle"
-        ).textContent =
-            ending.title;
-
-
-        document.getElementById(
-            "endingSubtitle"
-        ).textContent =
-            ending.subtitle ||
-            "Your twelve-turn era has come to an end.";
-
-
-        document.getElementById(
-            "finalPopulation"
-        ).textContent =
-            state.population;
-
-
-        document.getElementById(
-            "finalFood"
-        ).textContent =
-            state.food;
-
-
-        document.getElementById(
-            "finalMaterials"
-        ).textContent =
-            state.materials;
-
-
-        document.getElementById(
-            "finalWealth"
-        ).textContent =
-            state.wealth;
-
-
-        document.getElementById(
-            "finalMorale"
-        ).textContent =
-            state.morale;
-
-
-        document.getElementById(
-            "finalStory"
-        ).textContent =
-            ending.story;
-
-
-        document.getElementById(
-            "definingTrait"
-        ).textContent =
-            ending.trait;
-
-
-        /*
-         * Give the result visual a semantic trait class.
-         * The CSS can use this later to create genuinely
-         * different visual identities for different endings.
-         */
-
-
-        const civilizationVisual =
-            document.getElementById(
-                "civilizationVisual"
-            );
-
-
-        if (
-            civilizationVisual
-        ) {
-
-            civilizationVisual.dataset.trait =
-                ending.trait
-                    .toLowerCase()
-                    .replace(
-                        /\s+/g,
-                        "-"
-                    );
-
+        const civilizationVisual = document.getElementById("civilizationVisual");
+        if (civilizationVisual) {
+            civilizationVisual.dataset.trait = ending.trait.toLowerCase().replace(/\s+/g, "-");
+            civilizationVisual.innerHTML = `
+                <img src="${ending.image}" alt="${ending.title}" class="personality-artwork">
+            `;
         }
 
-
-        const visualTrait =
-            document.getElementById(
-                "visualTrait"
-            );
-
-
-        if (
-            visualTrait
-        ) {
-
-            visualTrait.textContent =
-                ending.trait;
-
+        let personalityInsight = document.getElementById("personalityInsight");
+        if (!personalityInsight) {
+            personalityInsight = document.createElement("p");
+            personalityInsight.id = "personalityInsight";
+            personalityInsight.className = "personality-insight";
+            const definingTrait = document.querySelector(".defining-trait");
+            if (definingTrait) definingTrait.parentNode.insertBefore(personalityInsight, definingTrait);
         }
+        personalityInsight.textContent = ending.insight;
 
+        const visualTrait = document.getElementById("visualTrait");
+        if (visualTrait) visualTrait.textContent = ending.trait;
 
-        document.getElementById(
-            "endScreen"
-        ).hidden = false;
+        document.getElementById("endScreen").hidden = false;
 
-
-        /*
-         * Bring the result into view so the player
-         * immediately sees the outcome.
-         */
-
-
-        setTimeout(
-            () => {
-
-                document.getElementById(
-                    "endScreen"
-                ).scrollIntoView({
-
-                    behavior:
-                        "smooth",
-
-                    block:
-                        "start"
-
-                });
-
-            },
-            50
-        );
-
+        setTimeout(() => {
+            document.getElementById("endScreen").scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 50);
     }
-
 
 
     function resetGame() {
@@ -2784,6 +2209,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
             growth: 0
 
+        };
+
+
+        personalityScores = {
+            diplomat: 0,
+            guardian: 0,
+            commander: 0,
+            visionary: 0,
+            humanist: 0,
+            strategist: 0,
+            rebel: 0,
+            scholar: 0,
+            builder: 0,
+            survivor: 0
         };
 
 
