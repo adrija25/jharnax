@@ -2110,16 +2110,136 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         const profiles = {
-            diplomat: { title: "THE DIPLOMAT", trait: "DIPLOMAT", image: "images/diplomat.png", subtitle: "You shaped your civilization through cooperation, negotiation and careful relationships.", story: "You rarely saw every problem as a battle to be won. You looked for agreements, compromises and ways to keep relationships intact. Your civilization's strength came from knowing when listening could accomplish more than force.", insight: "You tend to look for the path that allows different interests to coexist." },
-            guardian: { title: "THE GUARDIAN", trait: "GUARDIAN", image: "images/guardian.png", subtitle: "You built your civilization around protection, stability and the wellbeing of your people.", story: "When uncertainty appeared, your instinct was to protect what mattered. You were willing to sacrifice wealth or opportunity when the safety of your people was at stake.", insight: "You naturally think about what needs protecting before asking what can be gained." },
-            commander: { title: "THE COMMANDER", trait: "COMMANDER", image: "images/commander.png", subtitle: "You made decisive choices and were willing to stand firmly behind them.", story: "Your civilization was shaped by decisiveness. You did not always choose the safest or most popular path, but you were willing to take responsibility and act when hesitation carried its own risks.", insight: "You are comfortable making difficult decisions when someone has to take the lead." },
-            visionary: { title: "THE VISIONARY", trait: "VISIONARY", image: "images/visionary.png", subtitle: "You repeatedly chose possibility over certainty.", story: "You were drawn toward opportunities that could change the future of your civilization. You were willing to experiment, expand and invest in possibilities that had not yet proven themselves.", insight: "You tend to see what something could become rather than only what it is today." },
-            humanist: { title: "THE HUMANIST", trait: "HUMANIST", image: "images/humanist.png", subtitle: "You measured success by the lives of the people inside your civilization.", story: "Again and again, your choices returned to people: their wellbeing, morale, opportunities and quality of life. Your civilization may not have maximised every resource, but you refused to treat its people as merely numbers.", insight: "You instinctively ask how decisions affect the human beings living with them." },
-            strategist: { title: "THE STRATEGIST", trait: "STRATEGIST", image: "images/strategist.png", subtitle: "You preferred calculated decisions over impulsive ones.", story: "You consistently weighed costs, risks and alternatives before committing. You understood that a good decision is not always the biggest decision — sometimes it is the one that preserves options for later.", insight: "You naturally think several moves ahead." },
-            rebel: { title: "THE REBEL", trait: "REBEL", image: "images/rebel.png", subtitle: "You were willing to question expectations and reject paths that did not feel right.", story: "Your civilization was not built by simply following the obvious path. You questioned proposals, resisted pressure and sometimes chose independence over cooperation.", insight: "You value autonomy and are willing to challenge the direction everyone else expects." },
-            scholar: { title: "THE SCHOLAR", trait: "SCHOLAR", image: "images/scholar.png", subtitle: "You believed knowledge could be one of the greatest foundations of civilization.", story: "You repeatedly invested in learning, education and understanding. You accepted that some of the most important investments may not produce immediate rewards.", insight: "You are drawn toward understanding how things work before deciding what should be done." },
-            builder: { title: "THE BUILDER", trait: "BUILDER", image: "images/builder.png", subtitle: "You turned resources into structures, systems and lasting foundations.", story: "Your choices repeatedly favoured creating something tangible. Buildings, infrastructure and practical foundations mattered because you understood that civilizations need things that endure beyond a single decision.", insight: "You naturally turn ideas into systems, structures and things that can last." },
-            survivor: { title: "THE SURVIVOR", trait: "SURVIVOR", image: "images/survivor.png", subtitle: "You kept your civilization alive when circumstances became difficult.", story: "Your choices reveal a strong instinct for endurance. When resources became scarce or circumstances deteriorated, you focused on getting through the immediate danger and preserving what remained.", insight: "You know how to keep going when the ideal solution is no longer available." }
+            diplomat: {
+                title: "THE DIPLOMAT",
+                trait: "DIPLOMAT",
+                image: "images/diplomat.png",
+                subtitle: "You shaped your civilization through cooperation, negotiation and careful relationships.",
+                story: "You rarely saw every problem as a battle to be won. You looked for agreements, compromises and ways to keep relationships intact. Your civilization's strength came from knowing when listening could accomplish more than force.",
+                insight: "You tend to look for the path that allows different interests to coexist.",
+                howYouDecide: "You naturally look for common ground before choosing confrontation. You weigh how a decision will affect relationships as well as resources, and you often prefer a workable compromise over a victory that leaves lasting damage.",
+                howYouMoveThroughLife: "You are likely to move through life by reading the room, understanding different perspectives and keeping doors open. You can be the person who helps people with very different priorities find a way forward together.",
+                strength: "You can turn disagreement into cooperation. People may trust you to find a path forward when there is no obvious answer that satisfies everyone.",
+                blindSpot: "Keeping the peace can sometimes become more important than saying what you actually want. A compromise is not always the same thing as the right decision.",
+                decisionPhilosophy: "“Find a way forward without making unnecessary enemies.”"
+            },
+            guardian: {
+                title: "THE GUARDIAN",
+                trait: "GUARDIAN",
+                image: "images/guardian.png",
+                subtitle: "You built your civilization around protection, stability and the wellbeing of your people.",
+                story: "When uncertainty appeared, your instinct was to protect what mattered. You were willing to sacrifice wealth or opportunity when the safety of your people was at stake.",
+                insight: "You naturally think about what needs protecting before asking what can be gained.",
+                howYouDecide: "You begin by asking what could be harmed and who might bear the cost. Once something important is under threat, you are willing to spend resources or accept slower growth to keep it safe.",
+                howYouMoveThroughLife: "You tend to become the person others rely on when circumstances are uncertain. You notice vulnerabilities early and often feel most comfortable when the people, systems or responsibilities in your care are secure.",
+                strength: "You are dependable under pressure. You take responsibility seriously and are willing to make sacrifices that protect people or preserve something valuable.",
+                blindSpot: "Protection can become overprotection. A strong instinct to prevent harm can sometimes make you reluctant to take a worthwhile risk or allow others to find their own way.",
+                decisionPhilosophy: "“Protect what matters before chasing what is possible.”"
+            },
+            commander: {
+                title: "THE COMMANDER",
+                trait: "COMMANDER",
+                image: "images/commander.png",
+                subtitle: "You made decisive choices and were willing to stand firmly behind them.",
+                story: "Your civilization was shaped by decisiveness. You did not always choose the safest or most popular path, but you were willing to take responsibility and act when hesitation carried its own risks.",
+                insight: "You are comfortable making difficult decisions when someone has to take the lead.",
+                howYouDecide: "You are inclined to make the call rather than remain stuck between possibilities. Once you believe a direction is necessary, you can accept the consequences and move forward without needing everyone to agree first.",
+                howYouMoveThroughLife: "You tend to move toward responsibility rather than away from it. In uncertain situations, you may naturally become the person who sets a direction, establishes boundaries and expects action.",
+                strength: "You create momentum. When a situation is paralysed by uncertainty, your willingness to choose can turn discussion into action.",
+                blindSpot: "Decisiveness can become rigidity. Moving quickly can sometimes leave too little room for information, dissent or a better option that appears later.",
+                decisionPhilosophy: "“Someone has to decide — make the call and own it.”"
+            },
+            visionary: {
+                title: "THE VISIONARY",
+                trait: "VISIONARY",
+                image: "images/visionary.png",
+                subtitle: "You repeatedly chose possibility over certainty.",
+                story: "You were drawn toward opportunities that could change the future of your civilization. You were willing to experiment, expand and invest in possibilities that had not yet proven themselves.",
+                insight: "You tend to see what something could become rather than only what it is today.",
+                howYouDecide: "You are energized by potential. When an option could fundamentally change what comes next, you are willing to accept uncertainty and invest before the outcome is guaranteed.",
+                howYouMoveThroughLife: "You tend to live with an eye on what could be built, discovered or transformed. Routine can feel limiting when you can see a larger possibility beyond it, and you may be happiest when there is something meaningful to pursue.",
+                strength: "You can imagine futures that do not exist yet. Your willingness to experiment can create opportunities that a purely cautious approach would never discover.",
+                blindSpot: "Possibility can be seductive. You may sometimes underestimate the boring, practical work required to turn an exciting idea into something sustainable.",
+                decisionPhilosophy: "“If the future can be different, it may be worth risking the present.”"
+            },
+            humanist: {
+                title: "THE HUMANIST",
+                trait: "HUMANIST",
+                image: "images/humanist.png",
+                subtitle: "You measured success by the lives of the people inside your civilization.",
+                story: "Again and again, your choices returned to people: their wellbeing, morale, opportunities and quality of life. Your civilization may not have maximised every resource, but you refused to treat its people as merely numbers.",
+                insight: "You instinctively ask how decisions affect the human beings living with them.",
+                howYouDecide: "You look beyond the immediate result and consider the human experience created by a choice. Morale, fairness, dignity and wellbeing can matter to you even when they are harder to measure than wealth or materials.",
+                howYouMoveThroughLife: "You are likely to notice the people behind systems and outcomes. You may judge a situation less by how efficient it is and more by whether the people inside it are being treated well.",
+                strength: "You keep humanity in the equation. You can create loyalty, belonging and trust because people feel seen rather than treated as resources.",
+                blindSpot: "Caring deeply can make boundaries difficult. You may take on costs or responsibilities that are not yours to carry, or struggle with choices where someone inevitably loses.",
+                decisionPhilosophy: "“A civilization is only successful if the people living in it can feel it.”"
+            },
+            strategist: {
+                title: "THE STRATEGIST",
+                trait: "STRATEGIST",
+                image: "images/strategist.png",
+                subtitle: "You preferred calculated decisions over impulsive ones.",
+                story: "You consistently weighed costs, risks and alternatives before committing. You understood that a good decision is not always the biggest decision — sometimes it is the one that preserves options for later.",
+                insight: "You naturally think several moves ahead.",
+                howYouDecide: "You tend to compare consequences rather than react to the most obvious option. You look for leverage, trade-offs and ways to protect future choices while still making progress now.",
+                howYouMoveThroughLife: "You are likely to observe before committing. You may prefer having a sense of the landscape, keeping options available and making moves that improve your position over time rather than chasing every immediate opportunity.",
+                strength: "You can remain deliberate when other people are reacting emotionally. Your ability to see second- and third-order consequences can prevent avoidable mistakes.",
+                blindSpot: "Analysis can become its own form of hesitation. Sometimes the information you want will never be complete, and waiting for certainty can cost you an opportunity.",
+                decisionPhilosophy: "“Protect the future without losing the present.”"
+            },
+            rebel: {
+                title: "THE REBEL",
+                trait: "REBEL",
+                image: "images/rebel.png",
+                subtitle: "You were willing to question expectations and reject paths that did not feel right.",
+                story: "Your civilization was not built by simply following the obvious path. You questioned proposals, resisted pressure and sometimes chose independence over cooperation.",
+                insight: "You value autonomy and are willing to challenge the direction everyone else expects.",
+                howYouDecide: "You are suspicious of choices that are presented as inevitable. You ask whether a rule, expectation or established path actually deserves your agreement before deciding whether to follow it.",
+                howYouMoveThroughLife: "You tend to need a sense of autonomy. You may thrive when you can question assumptions, choose your own route and avoid being pushed into a role simply because it is expected of you.",
+                strength: "You can see alternatives that conformity hides. Your willingness to say no can protect independence and create room for genuine change.",
+                blindSpot: "Opposition can become a habit. Rejecting something simply because it is established can be just as limiting as following it without question.",
+                decisionPhilosophy: "“I will choose my path — not simply inherit one.”"
+            },
+            scholar: {
+                title: "THE SCHOLAR",
+                trait: "SCHOLAR",
+                image: "images/scholar.png",
+                subtitle: "You believed knowledge could be one of the greatest foundations of civilization.",
+                story: "You repeatedly invested in learning, education and understanding. You accepted that some of the most important investments may not produce immediate rewards.",
+                insight: "You are drawn toward understanding how things work before deciding what should be done.",
+                howYouDecide: "You prefer to improve the quality of the decision by improving the quality of your understanding. You are willing to invest time and resources in learning when the answer is not yet clear.",
+                howYouMoveThroughLife: "You tend to stay curious. Experience becomes something to study rather than merely endure, and you may keep asking questions long after others have accepted the first explanation.",
+                strength: "You can turn uncertainty into understanding. Your willingness to learn helps you adapt when old assumptions stop working.",
+                blindSpot: "There is always more to learn. Too much preparation can become a way of postponing action, especially when no amount of information can remove uncertainty completely.",
+                decisionPhilosophy: "“Understand first. Then decide what is worth doing.”"
+            },
+            builder: {
+                title: "THE BUILDER",
+                trait: "BUILDER",
+                image: "images/builder.png",
+                subtitle: "You turned resources into structures, systems and lasting foundations.",
+                story: "Your choices repeatedly favoured creating something tangible. Buildings, infrastructure and practical foundations mattered because you understood that civilizations need things that endure beyond a single decision.",
+                insight: "You naturally turn ideas into systems, structures and things that can last.",
+                howYouDecide: "You are drawn to choices that create something useful and durable. Rather than only solving today's problem, you often look for the structure, system or investment that can keep solving it tomorrow.",
+                howYouMoveThroughLife: "You tend to value progress you can see and build upon. You may feel most fulfilled when effort leaves something stronger behind — a skill, a project, a system, a home or a foundation for someone else.",
+                strength: "You make ideas tangible. You can turn limited resources into something that continues creating value long after the original decision.",
+                blindSpot: "Building can become an end in itself. You may sometimes keep improving a structure when what is really needed is flexibility, rest or a willingness to walk away.",
+                decisionPhilosophy: "“Leave something stronger than you found it.”"
+            },
+            survivor: {
+                title: "THE SURVIVOR",
+                trait: "SURVIVOR",
+                image: "images/survivor.png",
+                subtitle: "You kept your civilization alive when circumstances became difficult.",
+                story: "Your choices reveal a strong instinct for endurance. When resources became scarce or circumstances deteriorated, you focused on getting through the immediate danger and preserving what remained.",
+                insight: "You know how to keep going when the ideal solution is no longer available.",
+                howYouDecide: "You become practical when conditions get difficult. You focus on what is necessary, what can be protected and what must be sacrificed so that the whole system can keep functioning.",
+                howYouMoveThroughLife: "You tend to be adaptable when circumstances stop cooperating. You may not need everything to be ideal before moving forward; you can work with what is available and keep going when others become overwhelmed.",
+                strength: "You endure. You can function under pressure, improvise with limited resources and keep sight of what absolutely has to survive.",
+                blindSpot: "Survival mode can become a permanent way of living. Once danger passes, it can be difficult to stop bracing for the next problem and allow yourself to pursue growth rather than merely safety.",
+                decisionPhilosophy: "“When the perfect choice disappears, make the choice that keeps you moving.”"
+            }
         };
 
         return { ...profiles[winningPersonality], scores };
@@ -2129,46 +2249,165 @@ document.addEventListener("DOMContentLoaded", () => {
     function endGame() {
 
         document.querySelector(".event-panel").hidden = true;
+
         document.querySelector(".civilization-log").hidden = true;
+
 
         const ending = calculateEnding();
 
-        document.getElementById("endingTitle").textContent = ending.title;
-        document.getElementById("endingSubtitle").textContent = ending.subtitle;
-        document.getElementById("finalPopulation").textContent = state.population;
-        document.getElementById("finalFood").textContent = state.food;
-        document.getElementById("finalMaterials").textContent = state.materials;
-        document.getElementById("finalWealth").textContent = state.wealth;
-        document.getElementById("finalMorale").textContent = state.morale;
-        document.getElementById("finalStory").textContent = ending.story;
-        document.getElementById("definingTrait").textContent = ending.trait;
 
-        const civilizationVisual = document.getElementById("civilizationVisual");
+        document.getElementById("endingTitle").textContent =
+            ending.title;
+
+
+        document.getElementById("endingSubtitle").textContent =
+            ending.subtitle;
+
+
+        document.getElementById("finalPopulation").textContent =
+            state.population;
+
+
+        document.getElementById("finalFood").textContent =
+            state.food;
+
+
+        document.getElementById("finalMaterials").textContent =
+            state.materials;
+
+
+        document.getElementById("finalWealth").textContent =
+            state.wealth;
+
+
+        document.getElementById("finalMorale").textContent =
+            state.morale;
+
+
+        document.getElementById("finalStory").textContent =
+            ending.story;
+
+
+        document.getElementById("definingTrait").textContent =
+            ending.trait;
+
+
+
+        /* =========================
+           PERSONALITY ARTWORK
+           ========================= */
+
+        const civilizationVisual =
+            document.getElementById(
+                "civilizationVisual"
+            );
+
+
         if (civilizationVisual) {
-            civilizationVisual.dataset.trait = ending.trait.toLowerCase().replace(/\s+/g, "-");
+
+            civilizationVisual.dataset.trait =
+                ending.trait
+                    .toLowerCase()
+                    .replace(/\s+/g, "-");
+
+
             civilizationVisual.innerHTML = `
-                <img src="${ending.image}" alt="${ending.title}" class="personality-artwork">
+                <img
+                    src="${ending.image}"
+                    alt="${ending.title} — ${ending.trait}"
+                    class="personality-artwork"
+                >
             `;
+
         }
 
-        let personalityInsight = document.getElementById("personalityInsight");
-        if (!personalityInsight) {
-            personalityInsight = document.createElement("p");
-            personalityInsight.id = "personalityInsight";
-            personalityInsight.className = "personality-insight";
-            const definingTrait = document.querySelector(".defining-trait");
-            if (definingTrait) definingTrait.parentNode.insertBefore(personalityInsight, definingTrait);
+
+
+        /* =========================
+           PERSONALITY RESULT
+           ========================= */
+
+        const resultFields = {
+
+            personalityInsight:
+                ending.insight,
+
+            howYouDecide:
+                ending.howYouDecide,
+
+            howYouMoveThroughLife:
+                ending.howYouMoveThroughLife,
+
+            personalityStrength:
+                ending.strength,
+
+            personalityBlindSpot:
+                ending.blindSpot,
+
+            decisionPhilosophy:
+                ending.decisionPhilosophy
+
+        };
+
+
+        Object.entries(resultFields).forEach(
+            ([id, value]) => {
+
+                const element =
+                    document.getElementById(id);
+
+
+                if (element) {
+
+                    element.textContent =
+                        value;
+
+                }
+
+            }
+        );
+
+
+
+        /* =========================
+           OPTIONAL LEGACY ELEMENT
+           ========================= */
+
+        const visualTrait =
+            document.getElementById(
+                "visualTrait"
+            );
+
+
+        if (visualTrait) {
+
+            visualTrait.textContent =
+                ending.trait;
+
         }
-        personalityInsight.textContent = ending.insight;
 
-        const visualTrait = document.getElementById("visualTrait");
-        if (visualTrait) visualTrait.textContent = ending.trait;
 
-        document.getElementById("endScreen").hidden = false;
+
+        document.getElementById(
+            "endScreen"
+        ).hidden = false;
+
+
 
         setTimeout(() => {
-            document.getElementById("endScreen").scrollIntoView({ behavior: "smooth", block: "start" });
+
+            document.getElementById(
+                "endScreen"
+            ).scrollIntoView({
+
+                behavior: "smooth",
+
+                block: "start"
+
+            });
+
         }, 50);
+
     }
 
 
@@ -2239,6 +2478,34 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById(
             "endScreen"
         ).hidden = true;
+
+
+
+        /* Clear personality result fields */
+
+        const resultFields = [
+            "personalityInsight",
+            "howYouDecide",
+            "howYouMoveThroughLife",
+            "personalityStrength",
+            "personalityBlindSpot",
+            "decisionPhilosophy"
+        ];
+
+
+        resultFields.forEach((id) => {
+
+            const element =
+                document.getElementById(id);
+
+
+            if (element) {
+
+                element.textContent = "";
+
+            }
+
+        });
 
 
         const civilizationVisual =
