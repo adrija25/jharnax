@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -18,19 +17,14 @@
         content="Tiny Empire — build a civilization through choices, consequences and discover the kind of leader you become."
     >
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 
 <body>
 
-
 <header class="game-header">
-
 
     <a
         href="../../index.html"
@@ -52,7 +46,6 @@
         ← Jharnax
     </a>
 
-
 </header>
 
 
@@ -60,12 +53,11 @@
 <main class="game-page">
 
 
-    <!-- =========================================
+    <!-- ==========================================
          GAME INTRO
-    ========================================== -->
+         ========================================== -->
 
     <section class="game-intro">
-
 
         <div class="game-category">
             STRATEGY · SIMULATION
@@ -78,18 +70,16 @@
 
 
         <p>
-            Build a civilization. Make choices.
-            Discover the kind of leader you become.
+            Build a civilization. Make choices. Discover the kind of leader you become.
         </p>
-
 
     </section>
 
 
 
-    <!-- =========================================
+    <!-- ==========================================
          TURN
-    ========================================== -->
+         ========================================== -->
 
     <div class="turn-display">
 
@@ -105,15 +95,14 @@
 
 
 
-    <!-- =========================================
+    <!-- ==========================================
          RESOURCES
-    ========================================== -->
+         ========================================== -->
 
     <section class="resources">
 
 
         <div class="resource-card">
-
 
             <div class="resource-top">
 
@@ -137,13 +126,11 @@
 
             </div>
 
-
         </div>
 
 
 
         <div class="resource-card">
-
 
             <div class="resource-top">
 
@@ -167,13 +154,11 @@
 
             </div>
 
-
         </div>
 
 
 
         <div class="resource-card">
-
 
             <div class="resource-top">
 
@@ -197,13 +182,11 @@
 
             </div>
 
-
         </div>
 
 
 
         <div class="resource-card">
-
 
             <div class="resource-top">
 
@@ -227,13 +210,11 @@
 
             </div>
 
-
         </div>
 
 
 
         <div class="resource-card">
-
 
             <div class="resource-top">
 
@@ -257,20 +238,17 @@
 
             </div>
 
-
         </div>
-
 
     </section>
 
 
 
-    <!-- =========================================
+    <!-- ==========================================
          EVENT
-    ========================================== -->
+         ========================================== -->
 
     <section class="event-panel">
-
 
         <div class="event-label">
             CURRENT EVENT
@@ -301,17 +279,15 @@
 
         </div>
 
-
     </section>
 
 
 
-    <!-- =========================================
+    <!-- ==========================================
          CIVILIZATION LOG
-    ========================================== -->
+         ========================================== -->
 
     <section class="civilization-log">
-
 
         <div class="log-heading">
             Civilization Log
@@ -329,14 +305,13 @@
 
         </div>
 
-
     </section>
 
 
 
-    <!-- =========================================
+    <!-- ==========================================
          END SCREEN
-    ========================================== -->
+         ========================================== -->
 
     <section
         class="end-screen"
@@ -344,10 +319,6 @@
         hidden
     >
 
-
-        <!-- =====================================
-             RESULT HEADER
-        ====================================== -->
 
         <div class="game-category">
             ERA COMPLETE
@@ -366,9 +337,9 @@
 
 
 
-        <!-- =====================================
+        <!-- ======================================
              FINAL STATS
-        ====================================== -->
+             ====================================== -->
 
         <div class="final-stats">
 
@@ -427,125 +398,42 @@
 
             </div>
 
-
         </div>
 
 
 
-        <!-- =====================================
+        <!-- ======================================
              PERSONALITY ARTWORK
-        ====================================== -->
+             ====================================== -->
 
         <div
             class="civilization-visual"
             id="civilizationVisual"
         >
 
+            <!--
+                JavaScript inserts the matching
+                1280 × 1280 personality artwork here.
+            -->
 
-            <div class="visual-grid"></div>
-
-
-            <div
-                class="visual-orbit orbit-one"
-            ></div>
-
-
-            <div
-                class="visual-orbit orbit-two"
-            ></div>
-
-
-            <div
-                class="visual-orbit orbit-three"
-            ></div>
-
-
-
-            <div class="visual-core">
-
-
-                <div
-                    class="core-ring ring-outer"
-                ></div>
-
-
-                <div
-                    class="core-ring ring-middle"
-                ></div>
-
-
-                <div
-                    class="core-ring ring-inner"
-                ></div>
-
-
-                <div class="core-symbol">
-
-                    <span></span>
-
-                    <span></span>
-
-                    <span></span>
-
-                </div>
-
-
-            </div>
-
-
-
-            <div
-                class="visual-node node-one"
-            ></div>
-
-
-            <div
-                class="visual-node node-two"
-            ></div>
-
-
-            <div
-                class="visual-node node-three"
-            ></div>
-
-
-            <div
-                class="visual-node node-four"
-            ></div>
-
-
-            <div
-                class="visual-node node-five"
-            ></div>
-
-
-
-            <div class="visual-label">
-
-
-                <span>
-                    YOUR CIVILIZATION
-                </span>
-
-
-                <strong id="visualTrait">
-                    RESILIENCE
-                </strong>
-
-
-            </div>
-
+            <img
+                id="personalityArtwork"
+                src="images/strategist.png"
+                alt="Your Tiny Empire personality"
+            >
 
         </div>
 
 
 
-        <!-- =====================================
-             PERSONALITY INTRO
-        ====================================== -->
+        <!-- ======================================
+             PERSONALITY RESULT
+             ====================================== -->
 
-        <section class="personality-result">
-
+        <section
+            class="personality-result"
+            id="personalityResult"
+        >
 
             <div class="personality-result-label">
                 YOUR LEADERSHIP ARCHETYPE
@@ -553,29 +441,136 @@
 
 
             <h3
-                id="personalityInsightTitle"
                 class="personality-result-title"
+                id="personalityTitle"
             >
-                Your Leadership Archetype
+                The Strategist
             </h3>
 
 
             <p
-                id="personalityInsight"
                 class="personality-result-intro"
-            ></p>
-
+                id="personalityIntro"
+            >
+                Your choices reveal a tendency to think ahead,
+                weigh consequences and preserve options before
+                committing to a path.
+            </p>
 
         </section>
 
 
 
-        <!-- =====================================
+        <!-- ======================================
+             PERSONALITY ANALYSIS
+             ====================================== -->
+
+        <section
+            class="personality-analysis"
+            id="personalityAnalysis"
+        >
+
+
+            <article class="personality-card">
+
+                <div class="personality-card-label">
+                    HOW YOU DECIDE
+                </div>
+
+
+                <p id="personalityDecisionStyle">
+                    You naturally look beyond the immediate outcome.
+                    You tend to compare risks, alternatives and
+                    future consequences before making an important move.
+                </p>
+
+            </article>
+
+
+
+            <article class="personality-card">
+
+                <div class="personality-card-label">
+                    HOW YOU MOVE THROUGH LIFE
+                </div>
+
+
+                <p id="personalityLifePattern">
+                    You are more comfortable when you understand where
+                    a decision may lead. You often prefer creating
+                    stability and preserving possibilities rather than
+                    acting simply for the sake of action.
+                </p>
+
+            </article>
+
+
+
+            <article class="personality-card">
+
+                <div class="personality-card-label">
+                    YOUR STRENGTH
+                </div>
+
+
+                <p id="personalityStrength">
+                    You can remain thoughtful when circumstances become
+                    complicated. You are capable of seeing connections
+                    between decisions that other people may treat as
+                    separate.
+                </p>
+
+            </article>
+
+
+
+            <article class="personality-card">
+
+                <div class="personality-card-label">
+                    YOUR BLIND SPOT
+                </div>
+
+
+                <p id="personalityBlindSpot">
+                    Careful thinking can become overthinking. When too
+                    much depends on getting the decision right, you may
+                    delay action or protect future possibilities at the
+                    expense of the present moment.
+                </p>
+
+            </article>
+
+        </section>
+
+
+
+        <!-- ======================================
+             DECISION PHILOSOPHY
+             ====================================== -->
+
+        <section
+            class="decision-philosophy"
+            id="decisionPhilosophy"
+        >
+
+            <div class="decision-philosophy-label">
+                YOUR DECISION PHILOSOPHY
+            </div>
+
+
+            <p id="decisionPhilosophyText">
+                You naturally think several moves ahead.
+            </p>
+
+        </section>
+
+
+
+        <!-- ======================================
              FINAL STORY
-        ====================================== -->
+             ====================================== -->
 
-        <section class="final-story">
-
+        <div class="final-story">
 
             <h3>
                 Your Civilization
@@ -584,131 +579,31 @@
 
             <p id="finalStory"></p>
 
-
-        </section>
-
-
-
-        <!-- =====================================
-             PERSONALITY ANALYSIS
-        ====================================== -->
-
-        <section class="personality-analysis">
-
-
-            <!-- HOW YOU DECIDE -->
-
-            <article class="personality-card">
-
-
-                <div class="personality-card-label">
-                    HOW YOU DECIDE
-                </div>
-
-
-                <p id="howYouDecide"></p>
-
-
-            </article>
+        </div>
 
 
 
-            <!-- HOW YOU MOVE THROUGH LIFE -->
-
-            <article class="personality-card">
-
-
-                <div class="personality-card-label">
-                    HOW YOU MOVE THROUGH LIFE
-                </div>
-
-
-                <p id="howYouMoveThroughLife"></p>
-
-
-            </article>
-
-
-
-            <!-- YOUR STRENGTH -->
-
-            <article class="personality-card">
-
-
-                <div class="personality-card-label">
-                    YOUR STRENGTH
-                </div>
-
-
-                <p id="personalityStrength"></p>
-
-
-            </article>
-
-
-
-            <!-- YOUR BLIND SPOT -->
-
-            <article class="personality-card">
-
-
-                <div class="personality-card-label">
-                    YOUR BLIND SPOT
-                </div>
-
-
-                <p id="personalityBlindSpot"></p>
-
-
-            </article>
-
-
-
-        </section>
-
-
-
-        <!-- =====================================
-             DECISION PHILOSOPHY
-        ====================================== -->
-
-        <section class="decision-philosophy">
-
-
-            <div class="decision-philosophy-label">
-                YOUR DECISION PHILOSOPHY
-            </div>
-
-
-            <p id="decisionPhilosophy"></p>
-
-
-        </section>
-
-
-
-        <!-- =====================================
+        <!-- ======================================
              DEFINING TRAIT
-        ====================================== -->
+             ====================================== -->
 
         <div class="defining-trait">
-
 
             <span>
                 Your defining trait
             </span>
 
 
-            <strong id="definingTrait"></strong>
-
+            <strong id="definingTrait">
+            </strong>
 
         </div>
 
 
 
-        <!-- =====================================
+        <!-- ======================================
              ACTIONS
-        ====================================== -->
+             ====================================== -->
 
         <div class="end-actions">
 
@@ -729,19 +624,16 @@
                 Return to Jharnax
             </a>
 
-
         </div>
 
 
     </section>
-
 
 </main>
 
 
 
 <script src="script.js"></script>
-
 
 </body>
 
