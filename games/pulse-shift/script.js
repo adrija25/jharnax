@@ -2465,7 +2465,13 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
 
-        return { ...profiles[winningPersonality], scores };
+        const selectedProfile = profiles[winningPersonality];
+
+        return {
+            key: winningPersonality,
+            ...selectedProfile,
+            scores
+        };
     }
 
 
@@ -2534,9 +2540,39 @@ document.addEventListener("DOMContentLoaded", () => {
                     .replace(/\s+/g, "-");
 
 
+            /*
+             * PERSONALITY IMAGE RESOLUTION
+             * -----------------------------
+             * The image is resolved from the same personality key that
+             * produced the text result. This prevents a stale/mismatched
+             * profile image reference from ever being paired with another
+             * personality's result. The query string also forces the browser
+             * to fetch the current artwork rather than an older cached copy.
+             */
+            const personalityImages = {
+                diplomat: "images/diplomat.png",
+                guardian: "images/guardian.png",
+                commander: "images/commander.png",
+                visionary: "images/visionary.png",
+                humanist: "images/humanist.png",
+                strategist: "images/strategist.png",
+                rebel: "images/rebel.png",
+                scholar: "images/scholar.png",
+                builder: "images/builder.png",
+                survivor: "images/survivor.png"
+            };
+
+            const imagePath =
+                personalityImages[ending.key] ||
+                ending.image;
+
+            const imageSource =
+                `${imagePath}?v=20260811-2`;
+
+
             civilizationVisual.innerHTML = `
                 <img
-                    src="${ending.image}"
+                    src="${imageSource}"
                     alt="${ending.title} — ${ending.trait}"
                     class="personality-artwork"
                 >
