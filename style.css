@@ -64,7 +64,6 @@ p {
     color: white;
 }
 
-
 /* =========================
    BRAND
 ========================= */
@@ -79,7 +78,6 @@ p {
 .brand span {
     color: var(--jharnax-accent-light);
 }
-
 
 /* =========================
    HEADER
@@ -126,7 +124,6 @@ p {
 .nav-links a:hover {
     color: var(--jharnax-text);
 }
-
 
 /* =========================
    HERO
@@ -182,7 +179,6 @@ p {
     line-height: 1.7;
 }
 
-
 /* =========================
    SECTIONS
 ========================= */
@@ -212,7 +208,6 @@ p {
     color: var(--jharnax-muted);
     line-height: 1.6;
 }
-
 
 /* =========================
    SEARCH
@@ -246,7 +241,6 @@ p {
     box-shadow:
         0 0 0 3px rgba(139, 92, 246, 0.15);
 }
-
 
 /* =========================
    CATEGORY FILTERS
@@ -292,7 +286,6 @@ p {
     border-color: var(--jharnax-accent);
 }
 
-
 /* =========================
    GAME GRID
 ========================= */
@@ -307,7 +300,6 @@ p {
 
     margin-top: 30px;
 }
-
 
 /* =========================
    GAME CARD
@@ -333,17 +325,20 @@ p {
         rgba(183, 148, 255, 0.35);
 }
 
-
 /* =========================
    GAME VISUAL
 ========================= */
 
 .game-card-visual {
+    width: 100%;
+    height: 180px;
     min-height: 180px;
 
     display: flex;
     align-items: center;
     justify-content: center;
+
+    overflow: hidden;
 
     background:
         radial-gradient(
@@ -356,6 +351,17 @@ p {
     border-bottom: 1px solid var(--jharnax-border);
 }
 
+/* Game artwork */
+.game-card-visual img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+}
+
 .game-card-visual span {
     font-size: 4rem;
     font-weight: 900;
@@ -364,7 +370,6 @@ p {
 
     color: rgba(255, 255, 255, 0.08);
 }
-
 
 /* =========================
    GAME CONTENT
@@ -397,7 +402,6 @@ p {
     font-size: 0.9rem;
     line-height: 1.6;
 }
-
 
 /* =========================
    GAME BUTTON
@@ -433,7 +437,6 @@ p {
     transform: translateY(-2px);
 }
 
-
 /* Disabled placeholder buttons */
 
 button.game-button:disabled {
@@ -444,7 +447,6 @@ button.game-button:disabled {
 
     transform: none;
 }
-
 
 /* =========================
    NO RESULTS
@@ -458,7 +460,6 @@ button.game-button:disabled {
     text-align: center;
 }
 
-
 /* =========================
    CATEGORIES
 ========================= */
@@ -466,7 +467,6 @@ button.game-button:disabled {
 .categories-section {
     border-top: 1px solid var(--jharnax-border);
 }
-
 
 /* =========================
    FOOTER
@@ -506,7 +506,6 @@ button.game-button:disabled {
     font-size: 0.8rem;
 }
 
-
 /* =========================
    RESPONSIVE
 ========================= */
@@ -527,7 +526,6 @@ button.game-button:disabled {
         width: 100%;
     }
 }
-
 
 @media (max-width: 600px) {
 
