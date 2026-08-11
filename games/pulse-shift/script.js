@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+ocument.addEventListener("DOMContentLoaded", () => {
 
     const TOTAL_TURNS = 12;
 
@@ -1877,490 +1877,174 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    function scorePersonality(choice) {
+    function scorePersonality(event, choice) {
 
         /*
          * PERSONALITY SCORING
          * -------------------
-         * The original version relied heavily on keywords inside the
-         * wording of each choice. That could make the result depend on
-         * the text of an option rather than the player's actual pattern
-         * of decisions.
+         * Each decision now carries a deliberate personality signal.
          *
-         * This version uses explicit behavioural signals:
+         * The previous system gave Strategist points from many overlapping
+         * generic rules (wealth, cautious choices, balanced effects, trade,
+         * and final wealth). That made Strategist disproportionately likely
+         * to win even when the player's actual decisions pointed elsewhere.
          *
-         * 1. The strategic flag attached to the choice.
-         * 2. The resources the player chose to increase or sacrifice.
-         * 3. The type of decision being made.
-         *
-         * The result is still the same 10-archetype system, but the
-         * evidence is accumulated from the player's decisions rather
-         * than generic keyword matching.
+         * This version makes the player's chosen action the main evidence.
+         * Every choice has a primary personality and, where appropriate, a
+         * secondary personality. Final civilization conditions provide only
+         * small supporting signals later in calculateEnding().
          */
 
-        const effects = choice.effects || {};
-        const flag = choice.flag || null;
-        const title = choice.title || "";
+        const key = `${event.title}::${choice.title}`;
 
-        const add = (personality, amount = 1) => {
-            personalityScores[personality] += amount;
+        const profiles = {
+
+            // THE EARLY RAINS
+            "The Early Rains::Invest in the harvest": { builder: 5, visionary: 2, guardian: 1 },
+            "The Early Rains::Protect the roads": { builder: 4, strategist: 2 },
+            "The Early Rains::Preserve your reserves": { survivor: 5, strategist: 1 },
+
+            // THE HUNGRY NEIGHBOUR
+            "The Hungry Neighbour::Share your stores": { diplomat: 5, humanist: 3 },
+            "The Hungry Neighbour::Sell it at a fair price": { diplomat: 4, strategist: 2, humanist: 2 },
+            "The Hungry Neighbour::Protect your reserves": { survivor: 5, guardian: 2 },
+
+            // THE TRAVELLING MERCHANT
+            "The Travelling Merchant::Accept the deal": { strategist: 4, visionary: 2 },
+            "The Travelling Merchant::Negotiate carefully": { diplomat: 4, strategist: 2 },
+            "The Travelling Merchant::Decline": { rebel: 4, strategist: 1 },
+
+            // THE NEW MINE
+            "The New Mine::Open the mine": { visionary: 4, builder: 2, strategist: 1 },
+            "The New Mine::Limit the mining": { strategist: 3, builder: 2, guardian: 1 },
+            "The New Mine::Leave it untouched": { rebel: 4, guardian: 2 },
+
+            // THE FESTIVAL
+            "The Festival::Hold a grand festival": { humanist: 6, visionary: 1 },
+            "The Festival::Hold a modest festival": { humanist: 5, strategist: 1 },
+            "The Festival::Cancel the festival": { survivor: 4, strategist: 2 },
+
+            // THE EMPTY GRANARY
+            "The Empty Granary::Ration food": { survivor: 6, guardian: 2 },
+            "The Empty Granary::Buy food": { survivor: 4, guardian: 2, strategist: 1 },
+            "The Empty Granary::Use emergency stores": { survivor: 5, guardian: 2 },
+
+            // THE BUILDER'S PROPOSAL
+            "The Builder's Proposal::Build it": { builder: 6, visionary: 2 },
+            "The Builder's Proposal::Build something smaller": { builder: 5, strategist: 2 },
+            "The Builder's Proposal::Reject the proposal": { rebel: 5, strategist: 1 },
+
+            // THE BORDER DISPUTE
+            "The Border Dispute::Give them the land": { diplomat: 6, humanist: 2 },
+            "The Border Dispute::Negotiate": { diplomat: 6, strategist: 1 },
+            "The Border Dispute::Refuse": { commander: 4, rebel: 4 },
+
+            // THE STRANGE SEEDS
+            "The Strange Seeds::Plant them everywhere": { visionary: 6, rebel: 2 },
+            "The Strange Seeds::Test them first": { scholar: 5, visionary: 2, strategist: 1 },
+            "The Strange Seeds::Reject them": { rebel: 5, survivor: 1 },
+
+            // THE SICK SEASON
+            "The Sick Season::Close the markets": { guardian: 6, humanist: 2 },
+            "The Sick Season::Continue normally": { strategist: 3, rebel: 2, visionary: 1 },
+            "The Sick Season::Fund public care": { humanist: 6, guardian: 3 },
+
+            // THE SKILLED OUTSIDERS
+            "The Skilled Outsiders::Welcome them": { diplomat: 5, humanist: 3, visionary: 1 },
+            "The Skilled Outsiders::Offer limited settlement": { strategist: 2, diplomat: 3, guardian: 1 },
+            "The Skilled Outsiders::Turn them away": { rebel: 4, guardian: 2 },
+
+            // THE GREAT LIBRARY
+            "The Great Library::Fund the library": { scholar: 7, visionary: 1 },
+            "The Great Library::Fund a small archive": { scholar: 6, strategist: 1 },
+            "The Great Library::Refuse": { rebel: 4, strategist: 1 },
+
+            // THE BROKEN BRIDGE
+            "The Broken Bridge::Repair immediately": { builder: 6, guardian: 1 },
+            "The Broken Bridge::Build a cheaper replacement": { builder: 5, strategist: 2 },
+            "The Broken Bridge::Reroute traffic": { survivor: 4, strategist: 2 },
+
+            // THE WEALTHY MERCHANT
+            "The Wealthy Merchant::Tax the merchant": { humanist: 5, commander: 2 },
+            "The Wealthy Merchant::Reward the merchant": { strategist: 4, visionary: 2 },
+            "The Wealthy Merchant::Leave them alone": { rebel: 4, strategist: 1 },
+
+            // THE DROUGHT
+            "The Drought::Protect the farmland": { guardian: 4, builder: 3, survivor: 2 },
+            "The Drought::Buy food abroad": { survivor: 4, strategist: 2 },
+            "The Drought::Trust the rains": { rebel: 4, survivor: 2 },
+
+            // THE CURIOUS CHILDREN
+            "The Curious Children::Build schools": { scholar: 5, humanist: 3, builder: 2 },
+            "The Curious Children::Create apprenticeships": { scholar: 5, builder: 2, humanist: 2 },
+            "The Curious Children::Ignore the request": { rebel: 3, strategist: 1 },
+
+            // THE NIGHT MARKET
+            "The Night Market::Allow it freely": { visionary: 4, rebel: 3, strategist: 1 },
+            "The Night Market::Regulate it": { strategist: 3, guardian: 2 },
+            "The Night Market::Ban it": { commander: 4, rebel: 3, guardian: 1 },
+
+            // THE GREAT OPPORTUNITY
+            "The Great Opportunity::Accept immediately": { visionary: 4, strategist: 3 },
+            "The Great Opportunity::Negotiate carefully": { diplomat: 4, strategist: 2 },
+            "The Great Opportunity::Reject it": { rebel: 5, commander: 2 },
+
+            // THE STORM
+            "The Storm::Evacuate vulnerable areas": { guardian: 6, humanist: 2 },
+            "The Storm::Build defenses": { commander: 5, guardian: 4, builder: 2 },
+            "The Storm::Do nothing": { survivor: 3, rebel: 2 },
+
+            // THE PEOPLE'S QUESTION
+            "The People's Question::A prosperous civilization": { strategist: 4, visionary: 3 },
+            "The People's Question::A strong civilization": { commander: 4, guardian: 3 },
+            "The People's Question::A happy civilization": { humanist: 6, diplomat: 2 }
         };
 
 
-        /*
-         * ============================================================
-         * 1. EXPLICIT BEHAVIOURAL FLAGS
-         * ============================================================
-         */
-
-        if (flag === "cooperation") {
-
-            add("diplomat", 5);
-            add("humanist", 2);
-
-        }
+        const selectedProfile = profiles[key];
 
 
-        if (flag === "defense") {
+        if (selectedProfile) {
 
-            add("guardian", 4);
-            add("commander", 4);
+            Object.entries(selectedProfile).forEach(
+                ([personality, amount]) => {
 
-        }
+                    personalityScores[personality] += amount;
 
+                }
+            );
 
-        if (flag === "growth") {
-
-            add("visionary", 4);
-            add("builder", 2);
-
-        }
-
-
-        if (flag === "experimentation") {
-
-            add("visionary", 4);
-            add("scholar", 3);
-
-        }
-
-
-        if (flag === "education") {
-
-            add("scholar", 6);
-
-        }
-
-
-        if (flag === "tradeFocus") {
-
-            add("strategist", 4);
-            add("visionary", 1);
-
+            return;
         }
 
 
         /*
-         * ============================================================
-         * 2. RESOURCE PRIORITIES
-         * ============================================================
-         *
-         * These signals ask what the player actually prioritised:
-         *
-         * Population / food  -> protection and survival
-         * Morale             -> human wellbeing
-         * Materials          -> building and infrastructure
-         * Wealth             -> strategy and economic positioning
+         * Safe fallback for any future choice added to the game.
+         * This deliberately does NOT award automatic Strategist points.
          */
 
-        if ((effects.population || 0) > 0) {
+        const flagFallbacks = {
+            cooperation: { diplomat: 3, humanist: 2 },
+            defense: { guardian: 3, commander: 3 },
+            growth: { visionary: 3, builder: 2 },
+            experimentation: { visionary: 3, scholar: 2 },
+            education: { scholar: 4 },
+            tradeFocus: { strategist: 3, visionary: 1 }
+        };
 
-            add("guardian", 2);
 
-        }
+        const fallback = flagFallbacks[choice.flag];
 
 
-        if ((effects.food || 0) > 0) {
+        if (fallback) {
 
-            add("guardian", 1);
+            Object.entries(fallback).forEach(
+                ([personality, amount]) => {
 
-        }
+                    personalityScores[personality] += amount;
 
-
-        if ((effects.morale || 0) > 0) {
-
-            add("humanist", 2);
-
-        }
-
-
-        if ((effects.materials || 0) > 0) {
-
-            add("builder", 2);
-
-        }
-
-
-        if ((effects.wealth || 0) > 0) {
-
-            add("strategist", 2);
-
-        }
-
-
-        /*
-         * ============================================================
-         * 3. SACRIFICE PATTERNS
-         * ============================================================
-         *
-         * A personality is revealed not only by what someone gains,
-         * but by what they are willing to give up to get it.
-         */
-
-        if (
-            (effects.wealth || 0) < 0 &&
-            (
-                (effects.morale || 0) > 0 ||
-                (effects.population || 0) > 0
-            )
-        ) {
-
-            add("humanist", 2);
-
-        }
-
-
-        if (
-            (effects.materials || 0) < 0 &&
-            (
-                (effects.food || 0) > 0 ||
-                (effects.population || 0) > 0
-            )
-        ) {
-
-            add("guardian", 2);
-
-        }
-
-
-        if (
-            (effects.wealth || 0) < 0 &&
-            (effects.materials || 0) < 0 &&
-            (effects.morale || 0) > 0
-        ) {
-
-            add("builder", 1);
-            add("humanist", 1);
-
-        }
-
-
-        /*
-         * ============================================================
-         * 4. RISK / OPPORTUNITY SIGNALS
-         * ============================================================
-         */
-
-        const totalPositiveImpact =
-            Object.values(effects)
-                .filter(value => value > 0)
-                .reduce((sum, value) => sum + value, 0);
-
-        const totalNegativeImpact =
-            Object.values(effects)
-                .filter(value => value < 0)
-                .reduce((sum, value) => sum + Math.abs(value), 0);
-
-
-        if (
-            totalPositiveImpact >= 15 &&
-            totalNegativeImpact >= 8
-        ) {
-
-            add("visionary", 2);
-
-        }
-
-
-        /*
-         * ============================================================
-         * 5. CAUTIOUS / DELIBERATE DECISIONS
-         * ============================================================
-         */
-
-        const cautiousChoices = new Set([
-            "Preserve your reserves",
-            "Protect your reserves",
-            "Negotiate carefully",
-            "Limit the mining",
-            "Hold a modest festival",
-            "Use emergency stores",
-            "Build something smaller",
-            "Test them first",
-            "Offer limited settlement",
-            "Fund a small archive",
-            "Build a cheaper replacement",
-            "Reroute traffic",
-            "Regulate it",
-            "Buy food abroad",
-            "Protect the farmland"
-        ]);
-
-
-        if (cautiousChoices.has(title)) {
-
-            add("strategist", 4);
-
-        }
-
-
-        /*
-         * ============================================================
-         * 6. DECISIVE / COMMAND-ORIENTED DECISIONS
-         * ============================================================
-         */
-
-        const decisiveChoices = new Set([
-            "Refuse",
-            "Refuse it",
-            "Reject it",
-            "Reject the proposal",
-            "Ban it",
-            "Do nothing",
-            "Build defenses",
-            "Stand firmly behind your claim"
-        ]);
-
-
-        if (decisiveChoices.has(title)) {
-
-            add("commander", 3);
-
-        }
-
-
-        /*
-         * ============================================================
-         * 7. AUTONOMY / INDEPENDENCE
-         * ============================================================
-         *
-         * These are explicit choices where the player rejected an
-         * expected path, preserved independence, or refused outside
-         * pressure.
-         */
-
-        const autonomyChoices = new Set([
-            "Decline",
-            "Reject them",
-            "Reject it",
-            "Leave it untouched",
-            "Turn them away",
-            "Reject the proposal",
-            "Refuse",
-            "Ban it",
-            "Reject the major trade agreement",
-            "Leave the merchant's wealth untouched",
-            "Trust the rains"
-        ]);
-
-
-        if (autonomyChoices.has(title)) {
-
-            add("rebel", 4);
-
-        }
-
-
-        /*
-         * ============================================================
-         * 8. KNOWLEDGE / LEARNING
-         * ============================================================
-         */
-
-        const learningChoices = new Set([
-            "Test them first",
-            "Fund the library",
-            "Fund a small archive",
-            "Build schools",
-            "Create apprenticeships"
-        ]);
-
-
-        if (learningChoices.has(title)) {
-
-            add("scholar", 3);
-
-        }
-
-
-        /*
-         * ============================================================
-         * 9. HUMAN-CENTRED DECISIONS
-         * ============================================================
-         */
-
-        const humanCentredChoices = new Set([
-            "Share your stores",
-            "Sell it at a fair price",
-            "Hold a grand festival",
-            "Hold a modest festival",
-            "Fund public care",
-            "Welcome them",
-            "Build schools",
-            "Create apprenticeships",
-            "Evacuate vulnerable areas",
-            "A happy civilization"
-        ]);
-
-
-        if (humanCentredChoices.has(title)) {
-
-            add("humanist", 3);
-
-        }
-
-
-        /*
-         * ============================================================
-         * 10. BUILDING / CREATION
-         * ============================================================
-         */
-
-        const buildingChoices = new Set([
-            "Invest in the harvest",
-            "Protect the roads",
-            "Open the mine",
-            "Build it",
-            "Build something smaller",
-            "Repair immediately",
-            "Build a cheaper replacement",
-            "Build schools",
-            "Protect the farmland",
-            "Build defenses"
-        ]);
-
-
-        if (buildingChoices.has(title)) {
-
-            add("builder", 3);
-
-        }
-
-
-        /*
-         * ============================================================
-         * 11. SURVIVAL / RESOURCE PRESERVATION
-         * ============================================================
-         */
-
-        const survivalChoices = new Set([
-            "Preserve your reserves",
-            "Protect your reserves",
-            "Ration food",
-            "Buy food",
-            "Use emergency stores",
-            "Trust the rains",
-            "Reroute traffic",
-            "Do nothing"
-        ]);
-
-
-        if (survivalChoices.has(title)) {
-
-            add("survivor", 3);
-
-        }
-
-
-        /*
-         * A direct food-protection decision during scarcity is strong
-         * evidence of practical survival thinking.
-         */
-
-        if (
-            (effects.food || 0) > 0 &&
-            (effects.wealth || 0) < 0
-        ) {
-
-            add("survivor", 2);
-
-        }
-
-
-        /*
-         * ============================================================
-         * 12. BALANCED DECISION-MAKING
-         * ============================================================
-         *
-         * Strategists are not necessarily the people who always
-         * choose the safest option. They often choose the option that
-         * avoids an extreme trade-off.
-         */
-
-        if (
-            totalPositiveImpact > 0 &&
-            totalNegativeImpact > 0 &&
-            totalPositiveImpact <= 15 &&
-            totalNegativeImpact <= 12
-        ) {
-
-            add("strategist", 2);
-
-        }
-
-
-        /*
-         * ============================================================
-         * 13. HIGH-UPSIDE EXPERIMENTATION
-         * ============================================================
-         */
-
-        if (
-            flag === "experimentation" &&
-            totalPositiveImpact > totalNegativeImpact
-        ) {
-
-            add("visionary", 2);
-
-        }
-
-
-        /*
-         * ============================================================
-         * 14. COOPERATION + WELLBEING
-         * ============================================================
-         *
-         * When someone repeatedly chooses cooperation while also
-         * protecting morale or people, both Diplomat and Humanist
-         * should receive evidence.
-         */
-
-        if (
-            flag === "cooperation" &&
-            (
-                (effects.morale || 0) > 0 ||
-                (effects.population || 0) > 0
-            )
-        ) {
-
-            add("humanist", 2);
-
-        }
-
-
-        /*
-         * ============================================================
-         * 15. PROTECTION + DECISIVENESS
-         * ============================================================
-         */
-
-        if (
-            flag === "defense" &&
-            (effects.population || 0) > 0
-        ) {
-
-            add("guardian", 2);
-            add("commander", 1);
+                }
+            );
 
         }
 
@@ -2372,7 +2056,7 @@ document.addEventListener("DOMContentLoaded", () => {
         choice
     ) {
 
-        scorePersonality(choice);
+        scorePersonality(event, choice);
 
 
         history.push({
@@ -2531,40 +2215,122 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function calculateEnding() {
 
-        const finalState = [
+        /*
+         * The player's decisions are the primary source of personality.
+         * Final civilization conditions only add small supporting signals,
+         * so a high wealth score or one strong resource cannot overpower
+         * the actual pattern of choices made during the game.
+         */
+
+        const scores = { ...personalityScores };
+
+
+        // Small end-state bonuses only.
+        if (state.population >= 75) {
+            scores.guardian += 2;
+        }
+
+
+        if (state.morale >= 75) {
+            scores.humanist += 2;
+        }
+
+
+        if (state.materials >= 75) {
+            scores.builder += 2;
+        }
+
+
+        if (state.wealth >= 75) {
+            scores.strategist += 2;
+        }
+
+
+        if (state.food >= 75) {
+            scores.guardian += 2;
+        }
+
+
+        // Repeated explicit behavioural flags provide only a small nudge.
+        if (flags.education >= 3) {
+            scores.scholar += 2;
+        }
+
+
+        if (flags.experimentation >= 3) {
+            scores.visionary += 2;
+        }
+
+
+        if (flags.cooperation >= 3) {
+            scores.diplomat += 2;
+        }
+
+
+        if (flags.defense >= 3) {
+            scores.commander += 2;
+        }
+
+
+        if (flags.growth >= 3) {
+            scores.builder += 2;
+        }
+
+
+        if (flags.tradeFocus >= 3) {
+            scores.strategist += 2;
+        }
+
+
+        // Survival should reflect actual difficult conditions, not just low wealth.
+        const weakestResource = Math.min(
             state.population,
             state.food,
             state.materials,
             state.wealth,
             state.morale
-        ];
+        );
 
-        const weakestResource = Math.min(...finalState);
-        const scores = { ...personalityScores };
 
-        if (weakestResource <= 20) scores.survivor += 8;
-        if (weakestResource <= 10) scores.survivor += 6;
-        if (state.population >= 70) scores.guardian += 3;
-        if (state.morale >= 70) scores.humanist += 4;
-        if (state.materials >= 70) scores.builder += 4;
-        if (state.wealth >= 70) scores.strategist += 4;
-        if (state.food >= 70) scores.guardian += 3;
-        if (flags.education >= 2) scores.scholar += 5;
-        if (flags.experimentation >= 2) scores.visionary += 4;
-        if (flags.cooperation >= 2) scores.diplomat += 4;
-        if (flags.defense >= 2) scores.commander += 4;
-        if (flags.growth >= 2) scores.builder += 3;
-        if (flags.tradeFocus >= 2) scores.strategist += 3;
+        if (weakestResource <= 20) {
+            scores.survivor += 2;
+        }
+
+
+        /*
+         * Find the highest score. The priority list is used ONLY for genuine
+         * ties. It no longer gives Strategist an advantage over other types.
+         */
 
         const priority = [
-            "diplomat", "guardian", "commander", "visionary", "humanist",
-            "strategist", "rebel", "scholar", "builder", "survivor"
+            "diplomat",
+            "guardian",
+            "commander",
+            "visionary",
+            "humanist",
+            "strategist",
+            "rebel",
+            "scholar",
+            "builder",
+            "survivor"
         ];
 
+
         let winningPersonality = priority[0];
-        priority.forEach(personality => {
-            if (scores[personality] > scores[winningPersonality]) winningPersonality = personality;
+        let highestScore = scores[winningPersonality];
+
+
+        priority.forEach((personality) => {
+
+            if (scores[personality] > highestScore) {
+
+                winningPersonality = personality;
+                highestScore = scores[personality];
+
+            }
+
         });
+
 
         const profiles = {
             diplomat: {
